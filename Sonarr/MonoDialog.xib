@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment version="1090" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MonoDialog" customModule="Sonarr" customModuleProvider="target">
+            <connections>
+                <outlet property="downloadButton" destination="p64-J7-VEq" id="5w8-6W-7Bh"/>
+                <outlet property="infoText" destination="dRK-Aj-Ses" id="rlu-04-Oud"/>
+                <outlet property="messageText" destination="M57-td-eni" id="VsY-mW-eA3"/>
+                <outlet property="progressBar" destination="HAu-EA-0Hu" id="svl-A3-0Wv"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="IFw-mI-1rP"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Sonarr" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="500" height="176"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="500" height="176"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M57-td-eni">
+                        <rect key="frame" x="102" y="139" width="313" height="17"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Download and install Mono Framework?" id="Qo2-9I-82E">
+                            <font key="font" metaFont="systemBold"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dRK-Aj-Ses">
+                        <rect key="frame" x="102" y="75" width="380" height="56"/>
+                        <textFieldCell key="cell" controlSize="small" sendsActionOnEndEditing="YES" allowsEditingTextAttributes="YES" id="KgG-IS-WL1">
+                            <font key="font" metaFont="smallSystem"/>
+                            <string key="title">Sonarr requires a current version of the Mono runtime environment to execute. These are support files that only need to be installed once.
+Visit http://www.mono-project.com for more information.
+Installing Mono will require an administrator password.</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <progressIndicator hidden="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="HAu-EA-0Hu">
+                        <rect key="frame" x="21" y="48" width="459" height="20"/>
+                    </progressIndicator>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p64-J7-VEq">
+                        <rect key="frame" x="316" y="13" width="170" height="32"/>
+                        <buttonCell key="cell" type="push" title="Download and Install" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3eL-ms-idq">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="downloadAction:" target="-2" id="aWQ-LH-uru"/>
+                        </connections>
+                    </button>
+                    <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VVl-ZI-2M9">
+                        <rect key="frame" x="20" y="92" width="64" height="64"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="NSInfo" id="YJt-5n-3WB"/>
+                    </imageView>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rdl-bP-no0">
+                        <rect key="frame" x="233" y="13" width="83" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mXo-iv-S6N">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancelAction:" target="-2" id="O4t-jR-XL0"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="-289" y="37"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="NSInfo" width="32" height="32"/>
+    </resources>
+</document>

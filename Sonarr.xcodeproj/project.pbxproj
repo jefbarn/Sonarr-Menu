@@ -7,10 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C16B22A1A542C5A0038B403 /* MonoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C16B2281A542C5A0038B403 /* MonoDialog.swift */; };
+		7C16B22B1A542C5A0038B403 /* MonoDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C16B2291A542C5A0038B403 /* MonoDialog.xib */; };
+		7C4CFB1F1A5CCE9C009A6021 /* DaemonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFB1E1A5CCE9C009A6021 /* DaemonController.swift */; };
 		7C533F211A5280C100E1473B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C533F201A5280C100E1473B /* AppDelegate.swift */; };
 		7C533F231A5280C100E1473B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C533F221A5280C100E1473B /* Images.xcassets */; };
 		7C533F261A5280C100E1473B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C533F241A5280C100E1473B /* MainMenu.xib */; };
 		7C533F321A5280C100E1473B /* SonarrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C533F311A5280C100E1473B /* SonarrTests.swift */; };
+		7C533F3E1A52811C00E1473B /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C533F3D1A52811C00E1473B /* Tools.swift */; };
+		7C83514B1A5948280040C5BA /* Migrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C83514A1A5948280040C5BA /* Migrate.swift */; };
+		7C83514D1A5974B00040C5BA /* DownloadSonarr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C83514C1A5974B00040C5BA /* DownloadSonarr.swift */; };
+		7C83514F1A597FEF0040C5BA /* LoginItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C83514E1A597FEF0040C5BA /* LoginItems.swift */; };
+		7CB5E3C21A5993D700F9A2DC /* MoveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5E3C11A5993D700F9A2DC /* MoveApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +32,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7C16B2281A542C5A0038B403 /* MonoDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonoDialog.swift; sourceTree = "<group>"; };
+		7C16B2291A542C5A0038B403 /* MonoDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MonoDialog.xib; sourceTree = "<group>"; };
+		7C4CFB1E1A5CCE9C009A6021 /* DaemonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaemonController.swift; sourceTree = "<group>"; };
 		7C533F1B1A5280C100E1473B /* Sonarr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sonarr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C533F1F1A5280C100E1473B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C533F201A5280C100E1473B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +43,11 @@
 		7C533F2B1A5280C100E1473B /* SonarrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SonarrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C533F301A5280C100E1473B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C533F311A5280C100E1473B /* SonarrTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SonarrTests.swift; sourceTree = "<group>"; };
+		7C533F3D1A52811C00E1473B /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		7C83514A1A5948280040C5BA /* Migrate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Migrate.swift; sourceTree = "<group>"; };
+		7C83514C1A5974B00040C5BA /* DownloadSonarr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadSonarr.swift; sourceTree = "<group>"; };
+		7C83514E1A597FEF0040C5BA /* LoginItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginItems.swift; sourceTree = "<group>"; };
+		7CB5E3C11A5993D700F9A2DC /* MoveApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,9 +89,17 @@
 		7C533F1D1A5280C100E1473B /* Sonarr */ = {
 			isa = PBXGroup;
 			children = (
+				7C533F3D1A52811C00E1473B /* Tools.swift */,
 				7C533F201A5280C100E1473B /* AppDelegate.swift */,
+				7CB5E3C11A5993D700F9A2DC /* MoveApp.swift */,
+				7C83514E1A597FEF0040C5BA /* LoginItems.swift */,
+				7C83514A1A5948280040C5BA /* Migrate.swift */,
 				7C533F221A5280C100E1473B /* Images.xcassets */,
 				7C533F241A5280C100E1473B /* MainMenu.xib */,
+				7C4CFB1E1A5CCE9C009A6021 /* DaemonController.swift */,
+				7C16B2281A542C5A0038B403 /* MonoDialog.swift */,
+				7C16B2291A542C5A0038B403 /* MonoDialog.xib */,
+				7C83514C1A5974B00040C5BA /* DownloadSonarr.swift */,
 				7C533F1E1A5280C100E1473B /* Supporting Files */,
 			);
 			path = Sonarr;
@@ -187,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C533F231A5280C100E1473B /* Images.xcassets in Resources */,
+				7C16B22B1A542C5A0038B403 /* MonoDialog.xib in Resources */,
 				7C533F261A5280C100E1473B /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -205,7 +230,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C83514F1A597FEF0040C5BA /* LoginItems.swift in Sources */,
+				7C4CFB1F1A5CCE9C009A6021 /* DaemonController.swift in Sources */,
+				7C16B22A1A542C5A0038B403 /* MonoDialog.swift in Sources */,
+				7C83514B1A5948280040C5BA /* Migrate.swift in Sources */,
+				7C533F3E1A52811C00E1473B /* Tools.swift in Sources */,
+				7CB5E3C21A5993D700F9A2DC /* MoveApp.swift in Sources */,
 				7C533F211A5280C100E1473B /* AppDelegate.swift in Sources */,
+				7C83514D1A5974B00040C5BA /* DownloadSonarr.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +355,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Sonarr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -334,6 +367,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Sonarr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -393,6 +427,7 @@
 				7C533F371A5280C100E1473B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7C533F381A5280C100E1473B /* Build configuration list for PBXNativeTarget "SonarrTests" */ = {
 			isa = XCConfigurationList;
@@ -401,6 +436,7 @@
 				7C533F3A1A5280C100E1473B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
