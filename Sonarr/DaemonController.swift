@@ -70,7 +70,7 @@ class DaemonController {
         if !NSFileManager.defaultManager().fileExistsAtPath(exePath) {
             
             let downloader = DownloadSonarr()
-            downloader.startDownload() {
+            downloader.startDownload(getBranch()) {
                 if NSFileManager.defaultManager().fileExistsAtPath(exePath) {
                     self.start()
                 } else {
@@ -135,6 +135,14 @@ class DaemonController {
         let port = config["Port"]?.integerValue ?? 8989
             
         return NSURL(string: "http://localhost:\(port)/")!
+    }
+    
+    
+    func getBranch() -> String {
+        
+        let config = readConfig()
+        
+        return config["Branch"] ?? "master"
     }
 
 }

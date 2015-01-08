@@ -13,16 +13,20 @@ import Foundation
 
 class DownloadSonarr: NSObject, NSURLDownloadDelegate {
     
-    let sonarrUrl = "http://update.nzbdrone.com/v2/master/osx/NzbDrone.master.osx.tar.gz"
+    var sonarrUrl = "http://download.sonarr.tv/v2/master/osx/NzbDrone.master.osx.tar.gz"
     var downloadFile = ""
     
     let binDir = NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("bin")
     
     var callback: (()->())?
     
-    func startDownload(callback: (()->())?) {
+    var branch: String = "master"
+    
+    func startDownload(branch: String, callback: (()->())?) {
         
         self.callback = callback
+        self.branch = branch
+        sonarrUrl = "http://download.sonarr.tv/v2/\(branch)/osx/NzbDrone.\(branch).osx.tar.gz"
 
         // Create request
         let urlRequest = NSURLRequest(URL: NSURL(string:sonarrUrl)! )
