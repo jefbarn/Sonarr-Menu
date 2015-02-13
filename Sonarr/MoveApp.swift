@@ -43,10 +43,8 @@ func moveToApplicationsFolder() {
     let destinationPath = applicationsDirectory.stringByAppendingPathComponent(bundleName)
     
     // Check if we need admin password to write to the Applications directory
-    var needAuthorization = !fm.isWritableFileAtPath(applicationsDirectory)
-    
     // Check if the destination bundle is already there but not writable
-    needAuthorization |= (fm.fileExistsAtPath(destinationPath) && !fm.isWritableFileAtPath(destinationPath))
+    let needAuthorization = !fm.isWritableFileAtPath(applicationsDirectory) || (fm.fileExistsAtPath(destinationPath) && !fm.isWritableFileAtPath(destinationPath))
     
     // Setup the alert
     let alert = NSAlert()
@@ -76,7 +74,7 @@ func moveToApplicationsFolder() {
     alert.showsSuppressionButton = true
     
     if UseSmallAlertSuppressCheckbox {
-        if let cell = alert.suppressionButton?.cell()? as? NSCell {
+        if let cell = alert.suppressionButton?.cell() as? NSCell {
             cell.controlSize = .SmallControlSize
             cell.font = NSFont.systemFontOfSize(NSFont.smallSystemFontSize())
         }
@@ -97,7 +95,7 @@ func moveToApplicationsFolder() {
             if !authorizedInstall(bundlePath, destinationPath) {
                 
                 NSLog("ERROR -- Could not copy myself to /Applications with authorization")
-                failureAlert()
+                //failureAlert()
                 return
             }
         } else {
@@ -111,15 +109,14 @@ func moveToApplicationsFolder() {
                     exit(0)
                 } else {
                     if !trash(applicationsDirectory.stringByAppendingPathComponent(bundleName)) {
-                        failureAlert()
+                        //failureAlert()
                         return
                     }
                 }
             }
             
             if !copyBundle(bundlePath, destinationPath) {
-                NSLog("ERROR -- Could not copy myself to %@", destinationPath)
-                failureAlert()
+                //failureAlert("Could not copy myself to \(destinationPath)")
                 return
             }
         }
@@ -145,14 +142,6 @@ func moveToApplicationsFolder() {
 }
 
 
-func failureAlert() {
-    // Show failure message
-    let alert = NSAlert()
-    alert.messageText = "Could not move to Applications folder"
-    alert.runModal()
-}
-
-
 func preferredInstallLocation() -> (location: String, isUserDirectory: Bool) {
     // Return the preferred install location.
     // Assume that if the user has a ~/Applications folder, they'd prefer their
@@ -161,7 +150,7 @@ func preferredInstallLocation() -> (location: String, isUserDirectory: Bool) {
     
     if let userApplicationsDir = fm.URLForDirectory(.ApplicationDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false, error: nil) {
         // User Applications directory exists. Get the directory contents.
-        if let contents = fm.contentsOfDirectoryAtURL(userApplicationsDir, includingPropertiesForKeys: nil, options: nil, error: nil)? as? [NSURL] {
+        if let contents = fm.contentsOfDirectoryAtURL(userApplicationsDir, includingPropertiesForKeys: nil, options: nil, error: nil) as? [NSURL] {
             
             // Check if there is at least one ".app" inside the directory.
             for contentsPath in contents {
@@ -223,7 +212,7 @@ func isInDownloadsFolder(path: String) -> Bool {
 func isApplicationAtPathRunning(path: String) -> Bool {
     
     // Use the new API on 10.6 or higher to determine if the app is already running
-    for runningApplication in NSWorkspace.sharedWorkspace().runningApplications as [NSRunningApplication] {
+    for runningApplication in NSWorkspace.sharedWorkspace().runningApplications as! [NSRunningApplication] {
         let executablePath = runningApplication.executableURL!.path!
         if executablePath.hasPrefix(path) {
             return true
@@ -248,10 +237,11 @@ func trash(path: String) -> Bool {
 func deleteOrTrash(path: String) -> Bool {
     var error: NSError?
     
-    if NSFileManager.defaultManager().removeItemAtPath(path, error:&error) {
+    if NSFileManager.defaultManager().removeItemAtPath(path, error: &error) {
         return true
     } else {
         NSLog("WARNING -- Could not delete '%@': %@", path, error!.localizedDescription)
+        NSAlert(error: error!).runModal()
         return trash(path)
     }
 }
@@ -288,6 +278,7 @@ func copyBundle(srcPath: String, dstPath: String) -> Bool {
         return true
     } else {
         NSLog("ERROR -- Could not copy '%@' to '%@' (%@)", srcPath, dstPath, error!.localizedDescription)
+        NSAlert(error: error!).runModal()
         return false
     }
 }

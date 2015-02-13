@@ -38,7 +38,6 @@ class MonoDialog: NSWindowController, NSURLDownloadDelegate {
     
     class func isMonoUpToDate() -> Bool {
         
-        let appSupportDir = applicationSupportDirectory()
         let monoPath = "/usr/bin/mono"
         
         var monoVersion = "0.0.0"
@@ -126,7 +125,7 @@ class MonoDialog: NSWindowController, NSURLDownloadDelegate {
         // Create the connection with the request and start loading the data.
         urlDownload = NSURLDownload(request: urlRequest, delegate: self)
         
-        NSLog("Request URL: " + urlRequest.URL.description)
+        NSLog("Request URL: " + urlRequest.URL!.description)
         
     }
     
@@ -200,7 +199,7 @@ class MonoDialog: NSWindowController, NSURLDownloadDelegate {
         progressBar.doubleValue = 0
         progressBar.hidden = false
         
-        let logFile = applicationSupportDirectory().stringByAppendingPathComponent(logFileName)
+        let logFile = appSupportDir().stringByAppendingPathComponent(logFileName)
         shellCmd("/usr/bin/touch", logFile)  // Make sure the log file is readable by user process
         
         let finishAction = { (output: String) -> () in

@@ -12,15 +12,36 @@ class DaemonController {
     
     var daemonTask = NSTask()
     
+    let configFile = appSupportDir().stringByAppendingPathComponent("config.xml")
+    var configDict = [String: NSString]()
+    
+    let lockFile = appSupportDir().stringByAppendingPathComponent("nzbdrone.pid")
+    
+    var dispatchSource: dispatch_source_t?
+    
+    init() {
+        
+        // Set up monitoring of config file.
+        // If the config file has not been created yet, then monitor the Support directory until it becomes available.
+        if NSFileManager.defaultManager().fileExistsAtPath(configFile) {
+            dispatchSource = monitorChangesToFile(configFile, readConfig)
+        } else {
+            dispatchSource = monitorChangesToFile(appSupportDir()) {
+                if NSFileManager.defaultManager().fileExistsAtPath(self.configFile) {
+                    if self.dispatchSource != nil { dispatch_source_cancel(self.dispatchSource!) }
+                    self.dispatchSource = monitorChangesToFile(self.configFile, self.readConfig)
+                }
+            }
+        }
+    }
+    
     
     func readLockFilePid() -> pid_t? {
         
-        let lockFilePath = applicationSupportDirectory().stringByAppendingPathComponent("nzbdrone.pid")
-        
-        if NSFileManager.defaultManager().fileExistsAtPath(lockFilePath) {
+        if NSFileManager.defaultManager().fileExistsAtPath(lockFile) {
             // Lock file exists
             // read pid from lock file
-            if let pid = NSString(contentsOfFile: lockFilePath, encoding: NSUTF8StringEncoding, error: nil)?.integerValue {
+            if let pid = NSString(contentsOfFile: lockFile, encoding: NSUTF8StringEncoding, error: nil)?.integerValue {
                 //NSLog("pid: %i", pid)
                 
                 var command = shellCmd("/bin/ps", "-p", String(pid), "-o", "command=")
@@ -39,11 +60,9 @@ class DaemonController {
 
     func killDaemonWithSignal(signal: Int32) {
         
-        let lockFilePath = applicationSupportDirectory().stringByAppendingPathComponent("nzbdrone.pid")
-        
         if let pid = readLockFilePid() {
             kill(pid, signal)
-            NSFileManager.defaultManager().removeItemAtPath(lockFilePath, error: nil)
+            NSFileManager.defaultManager().removeItemAtPath(lockFile, error: nil)
         }
     }
     
@@ -70,7 +89,7 @@ class DaemonController {
         if !NSFileManager.defaultManager().fileExistsAtPath(exePath) {
             
             let downloader = DownloadSonarr()
-            downloader.startDownload(getBranch()) {
+            downloader.startDownload(branch) {
                 if NSFileManager.defaultManager().fileExistsAtPath(exePath) {
                     self.start()
                 } else {
@@ -111,38 +130,31 @@ class DaemonController {
     }
 
 
-    func readConfig() -> [String: NSString] {
+    func readConfig() {
         
-        let configFilePath = applicationSupportDirectory().stringByAppendingPathComponent("config.xml")
-        var config = [String: NSString]()
+        configDict = [:]
         
-        let xmlDoc = NSXMLDocument(contentsOfURL: NSURL(fileURLWithPath: configFilePath)!, options: Int(NSXMLDocumentTidyHTML), error: nil)
+        let xmlDoc = NSXMLDocument(contentsOfURL: NSURL(fileURLWithPath: configFile)!, options: Int(NSXMLDocumentTidyHTML), error: nil)
             
-        if let nodes = xmlDoc?.nodesForXPath("Config/*", error: nil)? as? [NSXMLNode] {
+        if let nodes = xmlDoc?.nodesForXPath("Config/*", error: nil) as? [NSXMLNode] {
             for node in nodes {
-                config[node.name!] = node.stringValue!
+                configDict[node.name!] = node.stringValue!
             }
         }
-        
-        return config
     }
 
 
-    func getBrowserUrl() -> NSURL {
+    var webInterfaceUrl: NSURL {
         
-        let config = readConfig()
+        let port = configDict["Port"]?.integerValue ?? 8989
         
-        let port = config["Port"]?.integerValue ?? 8989
-            
         return NSURL(string: "http://localhost:\(port)/")!
     }
+
     
-    
-    func getBranch() -> String {
+    var branch: String {
         
-        let config = readConfig()
-        
-        return config["Branch"] ?? "master"
+        return (configDict["Branch"] as? String) ?? "master"
     }
 
 }

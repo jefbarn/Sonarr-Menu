@@ -107,7 +107,6 @@ class Migrate {
         } else {
             
             NSLog("Unable to find or create application support directory (migrate).")
-            
             return
         }
         
@@ -150,7 +149,7 @@ class Migrate {
     func isSymbolicLink(path: String) -> Bool {
         var error: NSError?
         //NSLog("Checking if \(path) is a symlink.")
-        if let fileType = fileManager.attributesOfItemAtPath(path, error: &error)?[NSFileType]? as? NSString {
+        if let fileType = fileManager.attributesOfItemAtPath(path, error: &error)?[NSFileType] as? NSString {
             if fileType == NSFileTypeSymbolicLink {
                 return true
             }

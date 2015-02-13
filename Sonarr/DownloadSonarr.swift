@@ -34,7 +34,7 @@ class DownloadSonarr: NSObject, NSURLDownloadDelegate {
         // Create the connection with the request and start loading the data.
         let urlDownload = NSURLDownload(request: urlRequest, delegate: self)
         
-        NSLog("Request URL: " + urlRequest.URL.description)
+        NSLog("Request URL: " + urlRequest.URL!.description)
     }
     
     

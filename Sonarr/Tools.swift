@@ -1,4 +1,4 @@
-import Foundation
+import Cocoa
 
 
 func shellCmd(cmd: String, args: String...) -> String {
@@ -18,7 +18,7 @@ func shellCmd(cmd: String, args: String...) -> String {
     let out_data = out_pipe.fileHandleForReading.readDataToEndOfFile()
     let out_string = NSString(data: out_data, encoding: NSUTF8StringEncoding)
     
-    return out_string!
+    return out_string as! String
 }
 
 
@@ -79,14 +79,14 @@ func shellCmd(cmd: String, args: String...) -> String {
     func notifiedForStdOutput(notification: NSNotification) {
         
         if let data = notification.userInfo?[NSFileHandleNotificationDataItem] as? NSData {
-            if let outString = NSString(data: data, encoding: NSUTF8StringEncoding) {
+            if let outString = NSString(data: data, encoding: NSUTF8StringEncoding) as? String {
                 output += outString
                 stdOutAction?(outString)
             }
         }
         
         if taskRunning {
-            if let fileHandle = notification.object? as? NSFileHandle {
+            if let fileHandle = notification.object as? NSFileHandle {
                 fileHandle.readInBackgroundAndNotify()
             }
         }
@@ -98,14 +98,14 @@ func shellCmd(cmd: String, args: String...) -> String {
     func notifiedForStdError(notification: NSNotification) {
         
         if let data = notification.userInfo?[NSFileHandleNotificationDataItem] as? NSData {
-            if let outString = NSString(data: data, encoding: NSUTF8StringEncoding) {
+            if let outString = NSString(data: data, encoding: NSUTF8StringEncoding) as? String {
                 stdErr += outString
                 stdErrorAction?(outString)
             }
         }
         
         if taskRunning {
-            if let fileHandle = notification.object? as? NSFileHandle {
+            if let fileHandle = notification.object as? NSFileHandle {
                 fileHandle.readInBackgroundAndNotify()
             }
         }
@@ -116,7 +116,7 @@ func shellCmd(cmd: String, args: String...) -> String {
         
         taskRunning = false
         
-        if let task = notification.object? as? NSTask {
+        if let task = notification.object as? NSTask {
             if task.terminationStatus == 0 {
                 NSLog("Task terminated successfully.")
             } else {
@@ -199,7 +199,7 @@ infix operator =~ {}
 func =~ (input: String, pattern: String) -> [String]? {
     let nsInput = input as NSString
     let regex = NSRegularExpression(pattern: pattern, options: .AnchorsMatchLines, error: nil)!
-    let results = regex.matchesInString(nsInput, options: nil, range: NSMakeRange(0, nsInput.length) ) as [NSTextCheckingResult]
+    let results = regex.matchesInString(nsInput as String, options: nil, range: NSMakeRange(0, nsInput.length) ) as! [NSTextCheckingResult]
     
     if (results.count > 0) {
         var values = [String]()
@@ -218,7 +218,7 @@ func =~ (input: String, pattern: String) -> [String]? {
 }
 
 
-func applicationSupportDirectory() -> String {
+func appSupportDir() -> String {
     
     let bundleName = "Sonarr"
     
@@ -240,4 +240,51 @@ func applicationSupportDirectory() -> String {
 
 func shellQuotedString(string: String) -> String {
     return String(format: "'%@'", string.stringByReplacingOccurrencesOfString("'", withString:"'\\''"))
+}
+
+
+func monitorChangesToFile(filename: String, handler: ()->()) -> dispatch_source_t? {
+
+    func printFlags(flags: UInt) -> String {
+        var output = ""
+        if (flags & DISPATCH_VNODE_DELETE) != 0 { output += "DISPATCH_VNODE_DELETE:" }
+        if (flags & DISPATCH_VNODE_WRITE)  != 0 { output += "DISPATCH_VNODE_WRITE:" }
+        if (flags & DISPATCH_VNODE_EXTEND) != 0 { output += "DISPATCH_VNODE_EXTEND:" }
+        if (flags & DISPATCH_VNODE_ATTRIB) != 0 { output += "DISPATCH_VNODE_ATTRIB:" }
+        if (flags & DISPATCH_VNODE_LINK)   != 0 { output += "DISPATCH_VNODE_LINK:" }
+        if (flags & DISPATCH_VNODE_RENAME) != 0 { output += "DISPATCH_VNODE_RENAME:" }
+        if (flags & DISPATCH_VNODE_REVOKE) != 0 { output += "DISPATCH_VNODE_REVOKE:" }
+        return output
+    }
+    
+    println("Monitoring \(filename) for changes.")
+    
+    let fileDescriptor = open(filename.fileSystemRepresentation(), O_EVTONLY)
+    if (fileDescriptor >= 0) {
+    
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        
+        if let source = dispatch_source_create(DISPATCH_SOURCE_TYPE_VNODE, UInt(fileDescriptor), DISPATCH_VNODE_WRITE, queue) {
+            
+            dispatch_source_set_event_handler(source) {
+                //println("Dispatch Event (handle=\(dispatch_source_get_handle(source))): \(printFlags(dispatch_source_get_data(source)))")
+                handler()
+            }
+            
+            dispatch_source_set_cancel_handler(source) {
+                close(fileDescriptor)
+                return
+            }
+
+            dispatch_resume(source)
+            return source
+        } else {
+            NSLog("Error: could not create file event dispatch source.")
+            close(fileDescriptor)
+        }
+        
+    } else {
+        NSLog("Error: could not open \(filename) for reading.")
+    }
+    return nil
 }

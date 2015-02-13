@@ -29,7 +29,7 @@ class LoginItems {
         
         if errorInfo != nil {
             NSLog("Error running applescript (addThisApp). ")
-            if let errorStr = errorInfo?.valueForKey(NSAppleScriptErrorMessage) as? NSString {
+            if let errorStr = errorInfo?.valueForKey(NSAppleScriptErrorMessage) as? String {
                 NSLog(errorStr)
             }
         }
@@ -54,7 +54,7 @@ class LoginItems {
         
         if errorInfo != nil {
             NSLog("Error running applescript (removeThisApp). ")
-            if let errorStr = errorInfo?.valueForKey(NSAppleScriptErrorMessage) as? NSString {
+            if let errorStr = errorInfo?.valueForKey(NSAppleScriptErrorMessage) as? String {
                 NSLog(errorStr)
             }
         }
@@ -81,7 +81,7 @@ class LoginItems {
         
         if errorInfo != nil {
             NSLog("Error running applescript (containsThisApp). ")
-            if let errorStr = errorInfo?.valueForKey(NSAppleScriptErrorMessage) as? NSString {
+            if let errorStr = errorInfo?.valueForKey(NSAppleScriptErrorMessage) as? String {
                 NSLog(errorStr)
             }
         }

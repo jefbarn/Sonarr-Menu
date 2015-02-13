@@ -58,7 +58,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         statusMenu.delegate = self
         
-        daemon.start()
+        if daemon.isRunning() {
+            NSLog("Another Sonarr process is already running. Please exit any active Sonarr sessions and restart.")
+        } else {
+            daemon.start()
+        }
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
@@ -70,7 +74,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     @IBAction func webInterfaceAction(sender: AnyObject) {
-        NSWorkspace.sharedWorkspace().openURL(daemon.getBrowserUrl())
+        NSWorkspace.sharedWorkspace().openURL(daemon.webInterfaceUrl)
     }
     
     @IBAction func homepageAction(sender: AnyObject) {
@@ -96,7 +100,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     
     
-    func menuWillOpen(menu: NSMenu!) {
+    func menuWillOpen(menu: NSMenu) {
 
         if daemon.isRunning() {
             statusMenuItem.title = "Running"
