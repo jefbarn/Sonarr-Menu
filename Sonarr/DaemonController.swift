@@ -20,7 +20,7 @@ class DaemonController {
     var dispatchSource: dispatch_source_t?
     
     init() {
-        
+        readConfig()
         // Set up monitoring of config file.
         // If the config file has not been created yet, then monitor the Support directory until it becomes available.
         if NSFileManager.defaultManager().fileExistsAtPath(configFile) {
@@ -134,7 +134,7 @@ class DaemonController {
         
         configDict = [:]
         
-        let xmlDoc = NSXMLDocument(contentsOfURL: NSURL(fileURLWithPath: configFile)!, options: Int(NSXMLDocumentTidyHTML), error: nil)
+        let xmlDoc = NSXMLDocument(contentsOfURL: NSURL(fileURLWithPath: configFile)!, options: Int(NSXMLDocumentTidyXML), error: nil)
             
         if let nodes = xmlDoc?.nodesForXPath("Config/*", error: nil) as? [NSXMLNode] {
             for node in nodes {
