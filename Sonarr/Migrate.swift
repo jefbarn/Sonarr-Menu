@@ -30,9 +30,14 @@ class Migrate {
         
         var movedFiles = false
         
-        
-        let localDomainDir = fileManager.URLForDirectory(.ApplicationSupportDirectory, inDomain: .LocalDomainMask, appropriateForURL: nil, create: false, error: nil)?.path
-        let userDomainDir  = fileManager.URLForDirectory(.ApplicationSupportDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false, error: nil)?.path
+        var localDomainDir: String?
+        var userDomainDir: String?
+        do {
+            localDomainDir = try fileManager.URLForDirectory(.ApplicationSupportDirectory, inDomain: .LocalDomainMask, appropriateForURL: nil, create: false).path
+        } catch {  }
+        do {
+            userDomainDir  = try fileManager.URLForDirectory(.ApplicationSupportDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false).path
+        } catch {  }
         
         if let targetDir = userDomainDir?.stringByAppendingPathComponent("Sonarr") {
             
@@ -114,61 +119,81 @@ class Migrate {
     
     
     func moveFiles(path: String, dest: String) -> Bool {
-        var error: NSError?
+
         NSLog("Moving files from \(path) to \(dest)")
-        let result = fileManager.moveItemAtPath(path, toPath: dest, error: &error)
-        if (error != nil) { NSLog("Error: " + error!.localizedDescription) }
-        return result
+
+        do {
+            try fileManager.moveItemAtPath(path, toPath: dest)
+            return true
+        } catch let error as NSError {
+            NSLog("Error moving files: " + error.localizedDescription)
+            return false
+        }
     }
     
     
     func deleteFiles(path: String) {
-        var error: NSError?
+
         NSLog("Deleting files from \(path)")
-        fileManager.removeItemAtPath(path, error: &error)
-        if (error != nil) { NSLog("Error: " + error!.localizedDescription) }
+        do {
+            try fileManager.removeItemAtPath(path)
+        } catch let error as NSError {
+            NSLog("Error deleting files: " + error.localizedDescription)
+        }
     }
     
     
     func createDirectory(path: String) {
-        var error: NSError?
+
         NSLog("Creating directory at \(path)")
-        fileManager.createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil, error: &error)
-        if (error != nil) { NSLog("Error: " + error!.localizedDescription) }
+        do {
+            try fileManager.createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            NSLog("Error creating directory: " + error.localizedDescription)
+        }
     }
     
     
     func createSymlink(path: String, dest: String) {
-        var error: NSError?
+
         NSLog("Creating symlink from \(path) to \(dest)")
-        fileManager.createSymbolicLinkAtPath(path, withDestinationPath: dest, error: &error)
-        if (error != nil) { NSLog("Error: " + error!.localizedDescription) }
+        do {
+            try fileManager.createSymbolicLinkAtPath(path, withDestinationPath: dest)
+        } catch let error as NSError {
+            NSLog("Error creating symlink: " + error.localizedDescription)
+        }
     }
     
     
     func isSymbolicLink(path: String) -> Bool {
-        var error: NSError?
+
         //NSLog("Checking if \(path) is a symlink.")
-        if let fileType = fileManager.attributesOfItemAtPath(path, error: &error)?[NSFileType] as? NSString {
+        do {
+            let fileType = try fileManager.attributesOfItemAtPath(path)[NSFileType] as? String
             if fileType == NSFileTypeSymbolicLink {
                 return true
             }
+        
+        } catch let error as NSError {
+            NSLog("Error checking symlink: " + error.localizedDescription)
         }
-        if (error != nil) { NSLog("Error: " + error!.localizedDescription) }
         return false
     }
     
     func isSymbolicLinkTo(path: String, dest: String) -> Bool {
-        var error: NSError?
+
         //NSLog("Checking if \(path) is a symlink to \(dest)...")
         if isSymbolicLink(path) {
-            if let linkDest = fileManager.destinationOfSymbolicLinkAtPath(path, error: &error) {
+            do {
+                let linkDest = try fileManager.destinationOfSymbolicLinkAtPath(path)
                 if linkDest == dest {
                     return true
                 }
+            } catch let error as NSError {
+                NSLog("Error checking symlink to: " + error.localizedDescription)
             }
         }
-        if (error != nil) { NSLog("Error: " + error!.localizedDescription) }
+
         return false
     }
     

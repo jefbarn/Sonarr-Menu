@@ -74,7 +74,7 @@ func moveToApplicationsFolder() {
     alert.showsSuppressionButton = true
     
     if UseSmallAlertSuppressCheckbox {
-        if let cell = alert.suppressionButton?.cell() as? NSCell {
+        if let cell = alert.suppressionButton?.cell {
             cell.controlSize = .SmallControlSize
             cell.font = NSFont.systemFontOfSize(NSFont.smallSystemFontSize())
         }
@@ -82,7 +82,7 @@ func moveToApplicationsFolder() {
     
     
     // Activate app -- work-around for focus issues related to "scary file from internet" OS dialog.
-    if !NSApp.isActive {
+    if !NSApp.active {
         NSApp.activateIgnoringOtherApps(true)
     }
     
@@ -92,7 +92,7 @@ func moveToApplicationsFolder() {
         // Move
         if needAuthorization {
             
-            if !authorizedInstall(bundlePath, destinationPath) {
+            if !authorizedInstall(bundlePath, dstPath: destinationPath) {
                 
                 NSLog("ERROR -- Could not copy myself to /Applications with authorization")
                 //failureAlert()
@@ -115,7 +115,7 @@ func moveToApplicationsFolder() {
                 }
             }
             
-            if !copyBundle(bundlePath, destinationPath) {
+            if !copyBundle(bundlePath, dstPath: destinationPath) {
                 //failureAlert("Could not copy myself to \(destinationPath)")
                 return
             }
@@ -148,23 +148,26 @@ func preferredInstallLocation() -> (location: String, isUserDirectory: Bool) {
     // applications to go there.
     let fm = NSFileManager.defaultManager()
     
-    if let userApplicationsDir = fm.URLForDirectory(.ApplicationDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false, error: nil) {
+    do {
+        let userApplicationsDir = try fm.URLForDirectory(.ApplicationDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
         // User Applications directory exists. Get the directory contents.
-        if let contents = fm.contentsOfDirectoryAtURL(userApplicationsDir, includingPropertiesForKeys: nil, options: nil, error: nil) as? [NSURL] {
+        let contents = try fm.contentsOfDirectoryAtURL(userApplicationsDir, includingPropertiesForKeys: nil, options: [])
             
-            // Check if there is at least one ".app" inside the directory.
-            for contentsPath in contents {
-                if contentsPath.pathExtension == "app" {
-                    return (userApplicationsDir.URLByResolvingSymlinksInPath!.path!, true)
-                }
+        // Check if there is at least one ".app" inside the directory.
+        for contentsPath in contents {
+            if contentsPath.pathExtension == "app" {
+                return (userApplicationsDir.URLByResolvingSymlinksInPath!.path!, true)
             }
         }
+    } catch {
     }
     
-    if let localApplicationsDir = fm.URLForDirectory(.ApplicationDirectory, inDomain: .LocalDomainMask, appropriateForURL: nil, create: false, error: nil) {
+    do {
+        let localApplicationsDir = try fm.URLForDirectory(.ApplicationDirectory, inDomain: .LocalDomainMask, appropriateForURL: nil, create: false)
         if let path = localApplicationsDir.URLByResolvingSymlinksInPath?.path {
             return (path, false)
         }
+    } catch _ {
     }
     
     return ("", false)
@@ -176,16 +179,16 @@ func isInApplicationsFolder(path: String) -> Bool {
     let fm = NSFileManager.defaultManager()
     
     // Check all the normal Application directories
-    if let applicationDirs = fm.URLsForDirectory(.ApplicationDirectory, inDomains: .AllDomainsMask) as? [NSURL] {
-        for appDir in applicationDirs {
-            if path.hasPrefix(appDir.path!) {
-                return true
-            }
+    let applicationDirs = fm.URLsForDirectory(.ApplicationDirectory, inDomains: .AllDomainsMask)
+    for appDir in applicationDirs {
+        if path.hasPrefix(appDir.path!) {
+            return true
         }
     }
+
     
     // Also, handle the case that the user has some other Application directory (perhaps on a separate data partition).
-    if contains(path.pathComponents, "Applications") {
+    if path.pathComponents.contains("Applications") {
         return true
     }
     
@@ -197,13 +200,13 @@ func isInDownloadsFolder(path: String) -> Bool {
     
     let fm = NSFileManager.defaultManager()
     
-    if let downloadDirs = fm.URLsForDirectory(.DownloadsDirectory, inDomains: .UserDomainMask) as? [NSURL] {
-        for downloadsDirPath in downloadDirs {
-            if path.hasPrefix(downloadsDirPath.path!) {
-                return true
-            }
+    let downloadDirs = fm.URLsForDirectory(.DownloadsDirectory, inDomains: .UserDomainMask)
+    for downloadsDirPath in downloadDirs {
+        if path.hasPrefix(downloadsDirPath.path!) {
+            return true
         }
     }
+
     
     return false
 }
@@ -212,7 +215,7 @@ func isInDownloadsFolder(path: String) -> Bool {
 func isApplicationAtPathRunning(path: String) -> Bool {
     
     // Use the new API on 10.6 or higher to determine if the app is already running
-    for runningApplication in NSWorkspace.sharedWorkspace().runningApplications as! [NSRunningApplication] {
+    for runningApplication in NSWorkspace.sharedWorkspace().runningApplications as [NSRunningApplication] {
         let executablePath = runningApplication.executableURL!.path!
         if executablePath.hasPrefix(path) {
             return true
@@ -235,13 +238,13 @@ func trash(path: String) -> Bool {
 
 
 func deleteOrTrash(path: String) -> Bool {
-    var error: NSError?
     
-    if NSFileManager.defaultManager().removeItemAtPath(path, error: &error) {
+    do {
+        try NSFileManager.defaultManager().removeItemAtPath(path)
         return true
-    } else {
-        NSLog("WARNING -- Could not delete '%@': %@", path, error!.localizedDescription)
-        NSAlert(error: error!).runModal()
+    } catch let error as NSError {
+        NSLog("WARNING -- Could not delete '%@': %@", path, error.localizedDescription)
+        NSAlert(error: error).runModal()
         return trash(path)
     }
 }
@@ -257,12 +260,12 @@ func authorizedInstall(srcPath: String, dstPath: String) -> Bool {
     if srcPath.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == "" { return false }
 
     // Delete the destination
-    if sudoShellCmd("/bin/rm", "-rf", dstPath) == nil {
+    if sudoShellCmd("/bin/rm", args: "-rf", dstPath) == nil {
         return false
     }
 
     // Copy
-    if sudoShellCmd("/bin/cp", "-pR", srcPath, dstPath) == nil {
+    if sudoShellCmd("/bin/cp", args: "-pR", srcPath, dstPath) == nil {
         return false
     }
 
@@ -272,13 +275,13 @@ func authorizedInstall(srcPath: String, dstPath: String) -> Bool {
 
 func copyBundle(srcPath: String, dstPath: String) -> Bool {
     let fm = NSFileManager.defaultManager()
-    var error: NSError?
     
-    if fm.copyItemAtPath(srcPath, toPath:dstPath, error: &error) {
+    do {
+        try fm.copyItemAtPath(srcPath, toPath:dstPath)
         return true
-    } else {
-        NSLog("ERROR -- Could not copy '%@' to '%@' (%@)", srcPath, dstPath, error!.localizedDescription)
-        NSAlert(error: error!).runModal()
+    } catch let error as NSError {
+        NSLog("ERROR -- Could not copy '%@' to '%@' (%@)", srcPath, dstPath, error.localizedDescription)
+        NSAlert(error: error).runModal()
         return false
     }
 }

@@ -24,12 +24,12 @@ class DaemonController {
         // Set up monitoring of config file.
         // If the config file has not been created yet, then monitor the Support directory until it becomes available.
         if NSFileManager.defaultManager().fileExistsAtPath(configFile) {
-            dispatchSource = monitorChangesToFile(configFile, readConfig)
+            dispatchSource = monitorChangesToFile(configFile, handler: readConfig)
         } else {
             dispatchSource = monitorChangesToFile(appSupportDir()) {
                 if NSFileManager.defaultManager().fileExistsAtPath(self.configFile) {
                     if self.dispatchSource != nil { dispatch_source_cancel(self.dispatchSource!) }
-                    self.dispatchSource = monitorChangesToFile(self.configFile, self.readConfig)
+                    self.dispatchSource = monitorChangesToFile(self.configFile, handler: self.readConfig)
                 }
             }
         }
@@ -41,17 +41,18 @@ class DaemonController {
         if NSFileManager.defaultManager().fileExistsAtPath(lockFile) {
             // Lock file exists
             // read pid from lock file
-            if let pid = NSString(contentsOfFile: lockFile, encoding: NSUTF8StringEncoding, error: nil)?.integerValue {
+            do {
+                let pid = try NSString(contentsOfFile: lockFile, encoding: NSUTF8StringEncoding).integerValue
                 //NSLog("pid: %i", pid)
                 
-                var command = shellCmd("/bin/ps", "-p", String(pid), "-o", "command=")
+                let command = shellCmd("/bin/ps", args: "-p", String(pid), "-o", "command=")
                 
                 //NSLog("command: \(command)")
 
                 if command.rangeOfString(".app/Contents/Resources/bin/NzbDrone.exe") != nil {
                     return pid_t(pid)
                 }
-            }
+            } catch { }
         }
         
         return nil
@@ -62,7 +63,10 @@ class DaemonController {
         
         if let pid = readLockFilePid() {
             kill(pid, signal)
-            NSFileManager.defaultManager().removeItemAtPath(lockFile, error: nil)
+            do {
+                try NSFileManager.defaultManager().removeItemAtPath(lockFile)
+            } catch _ {
+            }
         }
     }
     
@@ -134,12 +138,15 @@ class DaemonController {
         
         configDict = [:]
         
-        let xmlDoc = NSXMLDocument(contentsOfURL: NSURL(fileURLWithPath: configFile)!, options: Int(NSXMLDocumentTidyXML), error: nil)
-            
-        if let nodes = xmlDoc?.nodesForXPath("Config/*", error: nil) as? [NSXMLNode] {
+        do {
+            let xmlDoc = try NSXMLDocument(contentsOfURL: NSURL(fileURLWithPath: configFile), options: Int(NSXMLDocumentTidyXML))
+
+            let nodes = try xmlDoc.nodesForXPath("Config/*")
             for node in nodes {
                 configDict[node.name!] = node.stringValue!
             }
+        } catch let error as NSError {
+            NSLog("Error reading config file: ", error.description)
         }
     }
 

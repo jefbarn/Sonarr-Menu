@@ -30,7 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                
         moveToApplicationsFolder()
         
-        let migrater = Migrate()
+        Migrate()
         
         if MonoDialog.isMonoUpToDate() {
             createStatusMenu()
@@ -45,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-2)
         
         statusItem.image = NSImage(named: "StatusIcon")
-        statusItem.image!.setTemplate(true)
+        statusItem.image!.template = true
         statusItem.highlightMode = true
         
         if LoginItems.containsThisApp() {

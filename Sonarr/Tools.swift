@@ -143,7 +143,7 @@ func sudoShellCmd(cmd: String, args: String...) -> String?
     let script = String(format: "do shell script \"%@\" with administrator privileges", fullScript)
     var errorInfo: NSDictionary?
     
-    if let result = NSAppleScript(source: script)?.executeAndReturnError(&errorInfo)?.stringValue {
+    if let result = NSAppleScript(source: script)?.executeAndReturnError(&errorInfo).stringValue {
         return result
     }
     
@@ -169,7 +169,7 @@ func asyncSudoShellCmd(callback: ((String)->())?, cmd: String, args: String...)
         let script = String(format: "do shell script \"%@\" with administrator privileges", fullScript)
         var errorInfo: NSDictionary?
            
-        if let result = NSAppleScript(source: script)?.executeAndReturnError(&errorInfo)?.stringValue {
+        if let result = NSAppleScript(source: script)?.executeAndReturnError(&errorInfo).stringValue {
             
             dispatch_async(dispatch_get_main_queue()) {
                 callback?(result)
@@ -198,8 +198,8 @@ func asyncSudoShellCmd(callback: ((String)->())?, cmd: String, args: String...)
 infix operator =~ {}
 func =~ (input: String, pattern: String) -> [String]? {
     let nsInput = input as NSString
-    let regex = NSRegularExpression(pattern: pattern, options: .AnchorsMatchLines, error: nil)!
-    let results = regex.matchesInString(nsInput as String, options: nil, range: NSMakeRange(0, nsInput.length) ) as! [NSTextCheckingResult]
+    let regex = try! NSRegularExpression(pattern: pattern, options: .AnchorsMatchLines)
+    let results = regex.matchesInString(nsInput as String, options: [], range: NSMakeRange(0, nsInput.length) ) as [NSTextCheckingResult]
     
     if (results.count > 0) {
         var values = [String]()
@@ -222,14 +222,19 @@ func appSupportDir() -> String {
     
     let bundleName = "Sonarr"
     
-    if let URL = NSFileManager.defaultManager().URLForDirectory(.ApplicationSupportDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true, error: nil) {
+    do {
+        let URL = try NSFileManager.defaultManager().URLForDirectory(.ApplicationSupportDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
             
         if let dir = URL.URLByAppendingPathComponent(bundleName).path {
             
-            NSFileManager.defaultManager().createDirectoryAtPath(dir, withIntermediateDirectories: true, attributes: nil, error: nil)
+            do {
+                try NSFileManager.defaultManager().createDirectoryAtPath(dir, withIntermediateDirectories: true, attributes: nil)
+            } catch _ {
+            }
             
             return dir
         }
+    } catch _ {
     }
     
     NSLog("Unable to find or create application support directory.")
@@ -257,7 +262,7 @@ func monitorChangesToFile(filename: String, handler: ()->()) -> dispatch_source_
         return output
     }
     
-    println("Monitoring \(filename) for changes.")
+    print("Monitoring \(filename) for changes.")
     
     let fileDescriptor = open(filename.fileSystemRepresentation(), O_EVTONLY)
     if (fileDescriptor >= 0) {

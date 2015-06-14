@@ -23,7 +23,7 @@ class LoginItems {
         
         var errorInfo: NSDictionary?
         
-        if let result = NSAppleScript(source: script)?.executeAndReturnError(&errorInfo)?.stringValue {
+        if let result = NSAppleScript(source: script)?.executeAndReturnError(&errorInfo).stringValue {
             return
         }
         
@@ -48,7 +48,7 @@ class LoginItems {
         
         var errorInfo: NSDictionary?
         
-        if let result = NSAppleScript(source: script)?.executeAndReturnError(&errorInfo)?.stringValue {
+        if let result = NSAppleScript(source: script)?.executeAndReturnError(&errorInfo).stringValue {
             return
         }
         
@@ -74,7 +74,7 @@ class LoginItems {
         
         var errorInfo: NSDictionary?
         
-        if let result = NSAppleScript(source: script)?.executeAndReturnError(&errorInfo)?.stringValue {
+        if let result = NSAppleScript(source: script)?.executeAndReturnError(&errorInfo).stringValue {
             //NSLog("containsThisApp result: \(result)")
             return (result as NSString).boolValue
         }
