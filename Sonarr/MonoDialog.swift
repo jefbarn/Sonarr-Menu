@@ -16,16 +16,16 @@ class MonoDialog: NSWindowController, NSURLDownloadDelegate {
     @IBOutlet weak var progressBar: NSProgressIndicator!
     @IBOutlet weak var downloadButton: NSButton!
     
-    let monoUrl = "http://download.mono-project.com/archive/3.10.0/macos-10-x86/MonoFramework-MRE-3.10.0.macos10.xamarin.x86.pkg"
-    
-    let monoDownloadPage = NSURL(string: "http://www.go-mono.com/mono-downloads/download.html")!
+
+    let monoUrl = NSURL(string: "http://download.mono-project.com/archive/mdk-latest.pkg")!
+    static let minMonoVersion = "4.0.4"
     
     var downloadSize: Int64 = 0
     var downloadProgress: Int64 = 0
     
     let byteFormatter = NSByteCountFormatter()
     
-    var downloadFile = ""
+    var downloadFile = NSURL(fileURLWithPath: "")
     
     var asyncShell: AsyncShell?
     
@@ -35,33 +35,37 @@ class MonoDialog: NSWindowController, NSURLDownloadDelegate {
     
     var callback: (()->())?
     
+    class func isGreaterThanMinimumVersion(minVersion: String, currentVersion: String) -> Bool {
+        
+        let minTokens = minVersion.characters.split{$0 == "."}.map{Int(String($0))}
+        let curTokens = currentVersion.characters.split{$0 == "."}.map{Int(String($0))}
+        
+        for (minToken, curToken) in zip(minTokens, curTokens) {
+            print("minToken \(minToken), curToken \(curToken)")
+            if curToken < minToken {
+                return false
+            }
+            if curToken > minToken {
+                return true
+            }
+        }
+        return true
+    }
     
     class func isMonoUpToDate() -> Bool {
         
-        let monoPath = "/usr/bin/mono"
-        
         var monoVersion = "0.0.0"
-        var monoMajor = 0
-        var monoMinor = 0
-        
-        if NSFileManager.defaultManager().fileExistsAtPath(monoPath) {
-            let monoVerString = shellCmd(monoPath, args: "--version")
+
+        if monoPath.checkResourceIsReachable() {
+            let monoVerString = shellCmd(monoPath.path!, args: "--version")
             
             if let matches = monoVerString =~ "version (([0-9]+)\\.([0-9]+)\\.([0-9]+))" {
                 monoVersion = matches[0]
-                monoMajor = Int(matches[1])!  // fixme
-                monoMinor = Int(matches[2])!
-                //NSLog("Mono major: \(matches[1])")
-                //NSLog("Mono minor: \(matches[2])")
             }
         }
         NSLog("Mono version: \(monoVersion)")
-        
-        if (monoMajor < 3) || (monoMajor == 3 && monoMinor < 10) {
-            return false
-        } else {
-            return true
-        }
+
+        return isGreaterThanMinimumVersion(minMonoVersion, currentVersion: monoVersion)
     }
     
     func showDialog(callback: (()->())?) {
@@ -85,15 +89,15 @@ class MonoDialog: NSWindowController, NSURLDownloadDelegate {
     @IBAction func downloadAction(sender: AnyObject) {
         downloadButton.enabled = false
         
-        let filename = "MonoFramework-MRE-3.10.0.macos10.xamarin.x86.debug.pkg"
+        let filename = "mdk-latest.pkg"
         
         let downloadDir = try! NSFileManager.defaultManager().URLForDirectory(
             .DownloadsDirectory, inDomain: .UserDomainMask,
             appropriateForURL: nil, create: true)
         
-        downloadFile = downloadDir.path!.stringByAppendingPathComponent(filename)
+        downloadFile = downloadDir.URLByAppendingPathComponent(filename)
         
-        if NSFileManager.defaultManager().fileExistsAtPath(downloadFile) {
+        if downloadFile.checkResourceIsReachable() {
         
             NSLog("File found: \(downloadFile)")
             NSLog("Skipping download.")
@@ -120,7 +124,7 @@ class MonoDialog: NSWindowController, NSURLDownloadDelegate {
         messageText.stringValue = "Downloading Mono..."
         
         // Create request
-        let urlRequest = NSURLRequest(URL: NSURL(string:self.monoUrl)! )
+        let urlRequest = NSURLRequest(URL: monoUrl)
         
         // Create the connection with the request and start loading the data.
         urlDownload = NSURLDownload(request: urlRequest, delegate: self)
@@ -145,15 +149,15 @@ class MonoDialog: NSWindowController, NSURLDownloadDelegate {
         
         NSLog("Download path: \(downloadDir.path!)")
         
-        let destFile = downloadDir.path!.stringByAppendingPathComponent(filename)
-        download.setDestination(destFile, allowOverwrite: false)
+        let destFile = downloadDir.URLByAppendingPathComponent(filename)
+        download.setDestination(destFile.path!, allowOverwrite: false)
         
     }
     
     
     func download(download: NSURLDownload, didCreateDestination path: String) {
         
-        downloadFile = path
+        downloadFile = NSURL(fileURLWithPath: path)
         
         NSLog("Target file: \(downloadFile)")
     }
@@ -199,25 +203,25 @@ class MonoDialog: NSWindowController, NSURLDownloadDelegate {
         progressBar.doubleValue = 0
         progressBar.hidden = false
         
-        let logFile = appSupportDir().stringByAppendingPathComponent(logFileName)
-        shellCmd("/usr/bin/touch", args: logFile)  // Make sure the log file is readable by user process
+        let logFile = appSupportDir().URLByAppendingPathComponent(logFileName)
+        shellCmd("/usr/bin/touch", args: logFile.path!)  // Make sure the log file is readable by user process
         
         let finishAction = { (output: String) -> () in
             self.asyncShell?.terminate()
             self.asyncShell = nil
             NSLog("Install complete.")
             
-            if self.downloadFile.rangeOfString("debug") == nil {
+            if self.downloadFile.path!.rangeOfString("debug") == nil {
                 NSLog("Removing Mono download file.")
                 do {
-                    try NSFileManager.defaultManager().removeItemAtPath(self.downloadFile)
+                    try NSFileManager.defaultManager().removeItemAtURL(self.downloadFile)
                 } catch _ {
                 }
             }
             self.close()
             self.callback?()
         }
-        asyncSudoShellCmd(finishAction, cmd: "/usr/sbin/installer", args: "-verboseR", "-pkg", downloadFile, "-target", "/", ">", shellQuotedString(logFile))
+        asyncSudoShellCmd(finishAction, cmd: "/usr/sbin/installer", args: "-verboseR", "-pkg", downloadFile.path!, "-target", "/", ">", shellQuotedString(logFile.path!))
 
         
         let outputAction = { (output: String) -> () in
@@ -239,6 +243,6 @@ class MonoDialog: NSWindowController, NSURLDownloadDelegate {
         asyncShell = AsyncShell(stdOutAction: outputAction)
         
 
-        asyncShell!.shellCmd("/usr/bin/tail", "-n", "0", "-f", logFile)
+        asyncShell!.shellCmd("/usr/bin/tail", "-n", "0", "-f", logFile.path!)
     }
 }

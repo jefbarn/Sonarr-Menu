@@ -13,10 +13,10 @@ import Foundation
 
 class DownloadSonarr: NSObject, NSURLDownloadDelegate {
     
-    var sonarrUrl = "http://download.sonarr.tv/v2/master/osx/NzbDrone.master.osx.tar.gz"
+    var sonarrUrl = NSURL(string: "http://download.sonarr.tv/v2/master/osx/NzbDrone.master.osx.tar.gz")!
     var downloadFile = ""
     
-    let binDir = NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("bin")
+    let binDir = NSBundle.mainBundle().resourceURL!.URLByAppendingPathComponent("bin")
     
     var callback: (()->())?
     
@@ -26,13 +26,13 @@ class DownloadSonarr: NSObject, NSURLDownloadDelegate {
         
         self.callback = callback
         self.branch = branch
-        sonarrUrl = "http://download.sonarr.tv/v2/\(branch)/osx/NzbDrone.\(branch).osx.tar.gz"
+        sonarrUrl = NSURL(string: "http://download.sonarr.tv/v2/\(branch)/osx/NzbDrone.\(branch).osx.tar.gz")!
 
         // Create request
-        let urlRequest = NSURLRequest(URL: NSURL(string:sonarrUrl)! )
+        let urlRequest = NSURLRequest(URL: sonarrUrl )
         
         // Create the connection with the request and start loading the data.
-        let urlDownload = NSURLDownload(request: urlRequest, delegate: self)
+        _ = NSURLDownload(request: urlRequest, delegate: self)
         
         NSLog("Request URL: " + urlRequest.URL!.description)
     }
@@ -53,8 +53,8 @@ class DownloadSonarr: NSObject, NSURLDownloadDelegate {
         
         NSLog("Download path: \(downloadDir.path!)")
         
-        let destFile = downloadDir.path!.stringByAppendingPathComponent(filename)
-        download.setDestination(destFile, allowOverwrite: false)
+        let destFile = downloadDir.URLByAppendingPathComponent(filename)
+        download.setDestination(destFile.path!, allowOverwrite: false)
     }
     
     
@@ -74,39 +74,37 @@ class DownloadSonarr: NSObject, NSURLDownloadDelegate {
     
     func download(download: NSURLDownload, didReceiveDataOfLength length: Int) {
         
-        print(".", appendNewline: false)
+        print(".", terminator: "")
     }
     
     
     func downloadDidFinish(download: NSURLDownload) {
-        var error: NSError?
         
         print("")
         NSLog("Download finished: " + downloadFile)
         
         do {
-            try NSFileManager.defaultManager().createDirectoryAtPath(binDir, withIntermediateDirectories: true, attributes: nil)
-        } catch var error1 as NSError {
-            error = error1
+            try NSFileManager.defaultManager().createDirectoryAtURL(binDir, withIntermediateDirectories: true, attributes: nil)
+        } catch let error as NSError {
+            NSLog("Error: " + error.localizedDescription)
         }
-        if (error != nil) { NSLog("error: " + error!.localizedDescription) }
         
-        shellCmd("/usr/bin/tar", args: "-x", "-C", binDir, "-f", downloadFile, "--strip-components=1")
+        shellCmd("/usr/bin/tar", args: "-x", "-C", binDir.path!, "-f", downloadFile, "--strip-components=1")
         
         NSLog("Finish extracting.")
         
         do {
             try NSFileManager.defaultManager().removeItemAtPath(downloadFile)
-        } catch var error1 as NSError {
-            error = error1
+        } catch let error as NSError {
+            NSLog("Error: " + error.localizedDescription)
         }
-        if (error != nil) { NSLog("error: " + error!.localizedDescription) }
         
+        /*
         let exe_strings = shellCmd("/usr/bin/strings", args: "\(binDir)/NzbDrone.exe")
         
         if let matches = exe_strings =~ "^([0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)$" {
             NSLog("Version: " + matches[0])
-        }
+        } */
         
         callback?()
     }

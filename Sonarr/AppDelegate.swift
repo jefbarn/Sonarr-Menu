@@ -8,6 +8,8 @@
 
 import Cocoa
 
+let monoPath = NSURL(fileURLWithPath: "/usr/local/bin/mono")
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
@@ -21,8 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     
     let homepageUrl = NSURL(string: "https://sonarr.tv/")!
     
-    let monoPath = "/usr/bin/mono"
-    let binDir = NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("bin")
+    let binDir = NSBundle.mainBundle().resourceURL!.URLByAppendingPathComponent("bin")
        
     var daemon = DaemonController()
 
@@ -30,7 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                
         moveToApplicationsFolder()
         
-        Migrate()
+        _ = Migrate()
         
         if MonoDialog.isMonoUpToDate() {
             createStatusMenu()

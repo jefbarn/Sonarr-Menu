@@ -12,10 +12,10 @@ class DaemonController {
     
     var daemonTask = NSTask()
     
-    let configFile = appSupportDir().stringByAppendingPathComponent("config.xml")
+    let configFile = appSupportDir().URLByAppendingPathComponent("config.xml")
     var configDict = [String: NSString]()
     
-    let lockFile = appSupportDir().stringByAppendingPathComponent("nzbdrone.pid")
+    let lockFile = appSupportDir().URLByAppendingPathComponent("nzbdrone.pid")
     
     var dispatchSource: dispatch_source_t?
     
@@ -23,11 +23,11 @@ class DaemonController {
         readConfig()
         // Set up monitoring of config file.
         // If the config file has not been created yet, then monitor the Support directory until it becomes available.
-        if NSFileManager.defaultManager().fileExistsAtPath(configFile) {
+        if configFile.checkResourceIsReachable() {
             dispatchSource = monitorChangesToFile(configFile, handler: readConfig)
         } else {
             dispatchSource = monitorChangesToFile(appSupportDir()) {
-                if NSFileManager.defaultManager().fileExistsAtPath(self.configFile) {
+                if self.configFile.checkResourceIsReachable() {
                     if self.dispatchSource != nil { dispatch_source_cancel(self.dispatchSource!) }
                     self.dispatchSource = monitorChangesToFile(self.configFile, handler: self.readConfig)
                 }
@@ -38,21 +38,25 @@ class DaemonController {
     
     func readLockFilePid() -> pid_t? {
         
-        if NSFileManager.defaultManager().fileExistsAtPath(lockFile) {
-            // Lock file exists
-            // read pid from lock file
-            do {
-                let pid = try NSString(contentsOfFile: lockFile, encoding: NSUTF8StringEncoding).integerValue
-                //NSLog("pid: %i", pid)
-                
-                let command = shellCmd("/bin/ps", args: "-p", String(pid), "-o", "command=")
-                
-                //NSLog("command: \(command)")
+        // Check lock file exists
+        guard lockFile.checkResourceIsReachable() else {
+            return nil
+        }
+        
+        // read pid from lock file
+        do {
+            let pid = try NSString(contentsOfURL: lockFile, encoding: NSUTF8StringEncoding).integerValue
+            //NSLog("pid: %i", pid)
+            
+            let command = shellCmd("/bin/ps", args: "-p", String(pid), "-o", "command=")
+            
+            //NSLog("command: \(command)")
 
-                if command.rangeOfString(".app/Contents/Resources/bin/NzbDrone.exe") != nil {
-                    return pid_t(pid)
-                }
-            } catch { }
+            if command.rangeOfString(".app/Contents/Resources/bin/NzbDrone.exe") != nil {
+                return pid_t(pid)
+            }
+        } catch let error as NSError {
+            NSLog("Error reading lock file contents: ", error.localizedDescription)
         }
         
         return nil
@@ -61,12 +65,15 @@ class DaemonController {
 
     func killDaemonWithSignal(signal: Int32) {
         
-        if let pid = readLockFilePid() {
-            kill(pid, signal)
-            do {
-                try NSFileManager.defaultManager().removeItemAtPath(lockFile)
-            } catch _ {
-            }
+        guard let pid = readLockFilePid() else {
+            return
+        }
+        
+        kill(pid, signal)
+        do {
+            try NSFileManager.defaultManager().removeItemAtURL(lockFile)
+        } catch let error as NSError {
+            NSLog("Error remvoing lock file: ", error.localizedDescription)
         }
     }
     
@@ -85,16 +92,17 @@ class DaemonController {
 
     func start() {
         
-        let binDir = NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent("bin")
-        let monoPath = "/usr/bin/mono"
+        let binDir = NSBundle.mainBundle().resourceURL!.URLByAppendingPathComponent("bin")
         
-        let exePath = binDir.stringByAppendingPathComponent("NzbDrone.exe")
+        let exePath = binDir.URLByAppendingPathComponent("NzbDrone.exe")
+        print("monoPath = \(monoPath.path!)")
+        print("exePath = \(exePath.path!)")
         
-        if !NSFileManager.defaultManager().fileExistsAtPath(exePath) {
+        if exePath.checkResourceIsReachable() == false {
             
             let downloader = DownloadSonarr()
             downloader.startDownload(branch) {
-                if NSFileManager.defaultManager().fileExistsAtPath(exePath) {
+                if exePath.checkResourceIsReachable() {
                     self.start()
                 } else {
                     NSLog("Error downloading Sonarr files.")
@@ -104,26 +112,21 @@ class DaemonController {
         } else {
             
             
-            if NSFileManager.defaultManager().fileExistsAtPath(monoPath) == false {
+            if monoPath.checkResourceIsReachable() == false {
                 NSLog("Mono not installed!")
-                return
+                exit(1)
             }
-            if NSFileManager.defaultManager().fileExistsAtPath(exePath) == false {
+            if exePath.checkResourceIsReachable() == false {
                 NSLog("Sonarr daemon not installed!")
-                return
+                exit(1)
             }
             
             if isRunning() {
                 NSLog("Sonarr daemon is already running. (pid=\(readLockFilePid()))")
-                return
+                exit(1)
             }
             
-            daemonTask = NSTask()
-            
-            daemonTask.launchPath = monoPath
-            daemonTask.arguments = [exePath]
-            
-            daemonTask.launch()
+            daemonTask = NSTask.launchedTaskWithLaunchPath(monoPath.path!, arguments: [exePath.path!])
         }
     }
 
@@ -139,7 +142,7 @@ class DaemonController {
         configDict = [:]
         
         do {
-            let xmlDoc = try NSXMLDocument(contentsOfURL: NSURL(fileURLWithPath: configFile), options: Int(NSXMLDocumentTidyXML))
+            let xmlDoc = try NSXMLDocument(contentsOfURL: configFile, options: Int(NSXMLDocumentTidyXML))
 
             let nodes = try xmlDoc.nodesForXPath("Config/*")
             for node in nodes {

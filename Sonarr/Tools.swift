@@ -22,7 +22,7 @@ func shellCmd(cmd: String, args: String...) -> String {
 }
 
 
-@objc class AsyncShell {
+class AsyncShell : NSObject {  // objc?
     
     var taskRunning = false
     var output = ""
@@ -66,7 +66,7 @@ func shellCmd(cmd: String, args: String...) -> String {
         
         taskRunning = true
         
-        NSLog("Running task: " + cmd + " " + " ".join(args))
+        NSLog("Running task: " + cmd + " " + args.joinWithSeparator(" "))
         
         task.launch()
         
@@ -138,7 +138,7 @@ func shellCmd(cmd: String, args: String...) -> String {
 func sudoShellCmd(cmd: String, args: String...) -> String?
 {
 
-    let fullScript = String(format: "'%@' %@", cmd, " ".join(args))
+    let fullScript = String(format: "'%@' %@", cmd, args.joinWithSeparator(" "))
     
     let script = String(format: "do shell script \"%@\" with administrator privileges", fullScript)
     var errorInfo: NSDictionary?
@@ -164,7 +164,7 @@ func asyncSudoShellCmd(callback: ((String)->())?, cmd: String, args: String...)
     let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     dispatch_async(queue) {
         
-        let fullScript = String(format: "'%@' %@", cmd, " ".join(args))
+        let fullScript = String(format: "'%@' %@", cmd, args.joinWithSeparator(" "))
         
         let script = String(format: "do shell script \"%@\" with administrator privileges", fullScript)
         var errorInfo: NSDictionary?
@@ -218,28 +218,24 @@ func =~ (input: String, pattern: String) -> [String]? {
 }
 
 
-func appSupportDir() -> String {
+func appSupportDir() -> NSURL {
     
     let bundleName = "Sonarr"
     
     do {
-        let URL = try NSFileManager.defaultManager().URLForDirectory(.ApplicationSupportDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
-            
-        if let dir = URL.URLByAppendingPathComponent(bundleName).path {
-            
-            do {
-                try NSFileManager.defaultManager().createDirectoryAtPath(dir, withIntermediateDirectories: true, attributes: nil)
-            } catch _ {
-            }
-            
-            return dir
-        }
-    } catch _ {
+        let SupportDirUrl = try NSFileManager.defaultManager().URLForDirectory(.ApplicationSupportDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        
+        let path = SupportDirUrl.URLByAppendingPathComponent(bundleName)
+        
+        try NSFileManager.defaultManager().createDirectoryAtURL(path, withIntermediateDirectories: true, attributes: nil)
+
+        return path
+
+    } catch let error as NSError {
+        NSLog("Unable to find or create application support directory: ", error.localizedDescription)
+        
+        exit(1)
     }
-    
-    NSLog("Unable to find or create application support directory.")
-    
-    return ""
 }
 
 
@@ -248,7 +244,7 @@ func shellQuotedString(string: String) -> String {
 }
 
 
-func monitorChangesToFile(filename: String, handler: ()->()) -> dispatch_source_t? {
+func monitorChangesToFile(filename: NSURL, handler: ()->()) -> dispatch_source_t? {
 
     func printFlags(flags: UInt) -> String {
         var output = ""
@@ -262,9 +258,12 @@ func monitorChangesToFile(filename: String, handler: ()->()) -> dispatch_source_
         return output
     }
     
-    print("Monitoring \(filename) for changes.")
+    NSLog("Monitoring \(filename) for changes.")
     
-    let fileDescriptor = open(filename.fileSystemRepresentation(), O_EVTONLY)
+    var buffer = Array<Int8>(count: Int(PATH_MAX), repeatedValue: 0)
+    filename.getFileSystemRepresentation(&buffer, maxLength: Int(PATH_MAX))
+    
+    let fileDescriptor = open(&buffer, O_EVTONLY)
     if (fileDescriptor >= 0) {
     
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -292,4 +291,16 @@ func monitorChangesToFile(filename: String, handler: ()->()) -> dispatch_source_
         NSLog("Error: could not open \(filename) for reading.")
     }
     return nil
+}
+
+extension NSURL {
+    
+    func checkResourceIsReachable() -> Bool {
+        var error: NSError?
+        let reachable = self.checkResourceIsReachableAndReturnError(&error)
+        if !reachable {
+            //NSLog("Error checking resource reachable: " + error!.localizedDescription)
+        }
+        return reachable
+    }
 }

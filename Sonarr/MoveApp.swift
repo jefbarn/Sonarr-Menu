@@ -27,11 +27,11 @@ func moveToApplicationsFolder() {
         return
     }
     
-    // Path of the bundle
-    let bundlePath = NSBundle.mainBundle().bundlePath
+    // URL of the bundle
+    let bundleURL = NSBundle.mainBundle().bundleURL
     
     // Skip if the application is already in some Applications folder
-    if (isInApplicationsFolder(bundlePath)) { return }
+    if (isInApplicationsFolder(bundleURL)) { return }
     
     // File Manager
     let fm = NSFileManager.defaultManager()
@@ -39,12 +39,12 @@ func moveToApplicationsFolder() {
     
     // Since we are good to go, get the preferred installation directory.
     let (applicationsDirectory, installToUserApplications) = preferredInstallLocation()
-    let bundleName = bundlePath.lastPathComponent
-    let destinationPath = applicationsDirectory.stringByAppendingPathComponent(bundleName)
+    let bundleName = bundleURL.lastPathComponent!
+    let destinationURL = applicationsDirectory.URLByAppendingPathComponent(bundleName)
     
     // Check if we need admin password to write to the Applications directory
     // Check if the destination bundle is already there but not writable
-    let needAuthorization = !fm.isWritableFileAtPath(applicationsDirectory) || (fm.fileExistsAtPath(destinationPath) && !fm.isWritableFileAtPath(destinationPath))
+    let needAuthorization = !fm.isWritableFileAtPath(applicationsDirectory.path!) || (fm.fileExistsAtPath(destinationURL.path!) && !fm.isWritableFileAtPath(destinationURL.path!))
     
     // Setup the alert
     let alert = NSAlert()
@@ -56,7 +56,7 @@ func moveToApplicationsFolder() {
     if needAuthorization {
         informativeText += " " + "Note that this will require an administrator password."
     
-    } else if isInDownloadsFolder(bundlePath) {
+    } else if isInDownloadsFolder(bundleURL) {
         // Don't mention this stuff if we need authentication. The informative text is long enough as it is in that case.
         informativeText += " " + "This will keep your Downloads folder uncluttered."
     }
@@ -92,7 +92,7 @@ func moveToApplicationsFolder() {
         // Move
         if needAuthorization {
             
-            if !authorizedInstall(bundlePath, dstPath: destinationPath) {
+            if !authorizedInstall(bundleURL, dstURL: destinationURL) {
                 
                 NSLog("ERROR -- Could not copy myself to /Applications with authorization")
                 //failureAlert()
@@ -100,23 +100,23 @@ func moveToApplicationsFolder() {
             }
         } else {
             // If a copy already exists in the Applications folder, put it in the Trash
-            if fm.fileExistsAtPath(destinationPath) {
+            if destinationURL.checkResourceIsReachable() {
                 // But first, make sure that it's not running
-                if isApplicationAtPathRunning(destinationPath) {
+                if isApplicationAtURLRunning(destinationURL) {
                     // Give the running app focus and terminate myself
                     NSLog("INFO -- Switching to an already running version")
-                    NSTask.launchedTaskWithLaunchPath("/usr/bin/open", arguments: [destinationPath]).waitUntilExit()
+                    NSTask.launchedTaskWithLaunchPath("/usr/bin/open", arguments: [destinationURL.path!]).waitUntilExit()
                     exit(0)
                 } else {
-                    if !trash(applicationsDirectory.stringByAppendingPathComponent(bundleName)) {
+                    if !trash(applicationsDirectory.URLByAppendingPathComponent(bundleName)) {
                         //failureAlert()
                         return
                     }
                 }
             }
             
-            if !copyBundle(bundlePath, dstPath: destinationPath) {
-                //failureAlert("Could not copy myself to \(destinationPath)")
+            if !copyBundle(bundleURL, dstURL: destinationURL) {
+                //failureAlert("Could not copy myself to \(destinationURL)")
                 return
             }
         }
@@ -125,12 +125,12 @@ func moveToApplicationsFolder() {
         // NOTE: This final delete does not work if the source bundle is in a network mounted volume.
         //       Calling rm or file manager's delete method doesn't work either. It's unlikely to happen
         //       but it'd be great if someone could fix this.
-        if !deleteOrTrash(bundlePath) {
+        if !deleteOrTrash(bundleURL) {
             NSLog("WARNING -- Could not delete application after moving it to Applications folder")
         }
         
         // Relaunch.
-        relaunch(destinationPath)
+        relaunch(destinationURL)
         
         exit(0)
     } else if alert.suppressionButton!.state == NSOnState {
@@ -142,7 +142,7 @@ func moveToApplicationsFolder() {
 }
 
 
-func preferredInstallLocation() -> (location: String, isUserDirectory: Bool) {
+func preferredInstallLocation() -> (location: NSURL, isUserDirectory: Bool) {
     // Return the preferred install location.
     // Assume that if the user has a ~/Applications folder, they'd prefer their
     // applications to go there.
@@ -154,9 +154,9 @@ func preferredInstallLocation() -> (location: String, isUserDirectory: Bool) {
         let contents = try fm.contentsOfDirectoryAtURL(userApplicationsDir, includingPropertiesForKeys: nil, options: [])
             
         // Check if there is at least one ".app" inside the directory.
-        for contentsPath in contents {
-            if contentsPath.pathExtension == "app" {
-                return (userApplicationsDir.URLByResolvingSymlinksInPath!.path!, true)
+        for contentsURL in contents {
+            if contentsURL.pathExtension == "app" {
+                return (userApplicationsDir.URLByResolvingSymlinksInPath!, true)
             }
         }
     } catch {
@@ -164,31 +164,31 @@ func preferredInstallLocation() -> (location: String, isUserDirectory: Bool) {
     
     do {
         let localApplicationsDir = try fm.URLForDirectory(.ApplicationDirectory, inDomain: .LocalDomainMask, appropriateForURL: nil, create: false)
-        if let path = localApplicationsDir.URLByResolvingSymlinksInPath?.path {
-            return (path, false)
+        if let url = localApplicationsDir.URLByResolvingSymlinksInPath {
+            return (url, false)
         }
     } catch _ {
     }
     
-    return ("", false)
+    return (NSURL(fileURLWithPath: ""), false)
 }
 
 
-func isInApplicationsFolder(path: String) -> Bool {
+func isInApplicationsFolder(url: NSURL) -> Bool {
     
     let fm = NSFileManager.defaultManager()
     
     // Check all the normal Application directories
     let applicationDirs = fm.URLsForDirectory(.ApplicationDirectory, inDomains: .AllDomainsMask)
     for appDir in applicationDirs {
-        if path.hasPrefix(appDir.path!) {
+        if url.path!.hasPrefix(appDir.path!) {
             return true
         }
     }
 
     
     // Also, handle the case that the user has some other Application directory (perhaps on a separate data partition).
-    if path.pathComponents.contains("Applications") {
+    if url.pathComponents!.contains("Applications") {
         return true
     }
     
@@ -196,13 +196,13 @@ func isInApplicationsFolder(path: String) -> Bool {
 }
 
 
-func isInDownloadsFolder(path: String) -> Bool {
+func isInDownloadsFolder(url: NSURL) -> Bool {
     
     let fm = NSFileManager.defaultManager()
     
     let downloadDirs = fm.URLsForDirectory(.DownloadsDirectory, inDomains: .UserDomainMask)
-    for downloadsDirPath in downloadDirs {
-        if path.hasPrefix(downloadsDirPath.path!) {
+    for downloadsDirURL in downloadDirs {
+        if url.path!.hasPrefix(downloadsDirURL.path!) {
             return true
         }
     }
@@ -212,12 +212,12 @@ func isInDownloadsFolder(path: String) -> Bool {
 }
 
 
-func isApplicationAtPathRunning(path: String) -> Bool {
+func isApplicationAtURLRunning(url: NSURL) -> Bool {
     
     // Use the new API on 10.6 or higher to determine if the app is already running
     for runningApplication in NSWorkspace.sharedWorkspace().runningApplications as [NSRunningApplication] {
         let executablePath = runningApplication.executableURL!.path!
-        if executablePath.hasPrefix(path) {
+        if executablePath.hasPrefix(url.path!) {
             return true
         }
     }
@@ -225,47 +225,47 @@ func isApplicationAtPathRunning(path: String) -> Bool {
 }
 
 
-func trash(path: String) -> Bool {
+func trash(url: NSURL) -> Bool {
     if NSWorkspace.sharedWorkspace().performFileOperation(
         NSWorkspaceRecycleOperation,
-        source: path.stringByDeletingLastPathComponent, destination: "", files: [path.lastPathComponent], tag: nil) {
+        source: url.URLByDeletingLastPathComponent!.path!, destination: "", files: [url.lastPathComponent!], tag: nil) {
         return true
     } else {
-        NSLog("ERROR -- Could not trash '%@'", path)
+        NSLog("ERROR -- Could not trash '%@'", url)
         return false
     }
 }
 
 
-func deleteOrTrash(path: String) -> Bool {
+func deleteOrTrash(url: NSURL) -> Bool {
     
     do {
-        try NSFileManager.defaultManager().removeItemAtPath(path)
+        try NSFileManager.defaultManager().removeItemAtURL(url)
         return true
     } catch let error as NSError {
-        NSLog("WARNING -- Could not delete '%@': %@", path, error.localizedDescription)
+        NSLog("WARNING -- Could not delete '%@': %@", url, error.localizedDescription)
         NSAlert(error: error).runModal()
-        return trash(path)
+        return trash(url)
     }
 }
 
-func authorizedInstall(srcPath: String, dstPath: String) -> Bool {
+func authorizedInstall(srcURL: NSURL, dstURL: NSURL) -> Bool {
     
-    // Make sure that the destination path is an app bundle. We're essentially running 'sudo rm -rf'
+    // Make sure that the destination URL is an app bundle. We're essentially running 'sudo rm -rf'
     // so we really don't want to mess this up.
-    if !dstPath.hasSuffix(".app") { return false }
+    if dstURL.pathExtension != "app" { return false }
     
     // Do some more checks
-    if dstPath.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == "" { return false }
-    if srcPath.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == "" { return false }
+    if dstURL.path!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == "" { return false }
+    if srcURL.path!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) == "" { return false }
 
     // Delete the destination
-    if sudoShellCmd("/bin/rm", args: "-rf", dstPath) == nil {
+    if sudoShellCmd("/bin/rm", args: "-rf", dstURL.path!) == nil {
         return false
     }
 
     // Copy
-    if sudoShellCmd("/bin/cp", args: "-pR", srcPath, dstPath) == nil {
+    if sudoShellCmd("/bin/cp", args: "-pR", srcURL.path!, dstURL.path!) == nil {
         return false
     }
 
@@ -273,27 +273,27 @@ func authorizedInstall(srcPath: String, dstPath: String) -> Bool {
 }
 
 
-func copyBundle(srcPath: String, dstPath: String) -> Bool {
+func copyBundle(srcURL: NSURL, dstURL: NSURL) -> Bool {
     let fm = NSFileManager.defaultManager()
     
     do {
-        try fm.copyItemAtPath(srcPath, toPath:dstPath)
+        try fm.copyItemAtURL(srcURL, toURL:dstURL)
         return true
     } catch let error as NSError {
-        NSLog("ERROR -- Could not copy '%@' to '%@' (%@)", srcPath, dstPath, error.localizedDescription)
+        NSLog("ERROR -- Could not copy '%@' to '%@' (%@)", srcURL, dstURL, error.localizedDescription)
         NSAlert(error: error).runModal()
         return false
     }
 }
 
 
-func relaunch(destinationPath: String) {
+func relaunch(destinationURL: NSURL) {
     // The shell script waits until the original app process terminates.
     // This is done so that the relaunched app opens as the front-most app.
     let pid = NSProcessInfo.processInfo().processIdentifier
     
     // Command run just before running open /final/path
-    let quotedDestinationPath = shellQuotedString(destinationPath)
+    let quotedDestinationPath = shellQuotedString(destinationURL.path!)
     
     // OS X >=10.5:
     // Before we launch the new app, clear xattr:com.apple.quarantine to avoid

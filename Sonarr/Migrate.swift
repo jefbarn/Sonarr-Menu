@@ -30,26 +30,26 @@ class Migrate {
         
         var movedFiles = false
         
-        var localDomainDir: String?
-        var userDomainDir: String?
+        var localDomainDir: NSURL?
+        var userDomainDir: NSURL?
         do {
-            localDomainDir = try fileManager.URLForDirectory(.ApplicationSupportDirectory, inDomain: .LocalDomainMask, appropriateForURL: nil, create: false).path
+            localDomainDir = try fileManager.URLForDirectory(.ApplicationSupportDirectory, inDomain: .LocalDomainMask, appropriateForURL: nil, create: false)
         } catch {  }
         do {
-            userDomainDir  = try fileManager.URLForDirectory(.ApplicationSupportDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false).path
+            userDomainDir  = try fileManager.URLForDirectory(.ApplicationSupportDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
         } catch {  }
         
-        if let targetDir = userDomainDir?.stringByAppendingPathComponent("Sonarr") {
+        if let targetDir = userDomainDir?.URLByAppendingPathComponent("Sonarr") {
             
-            if fileManager.fileExistsAtPath(targetDir) {
+            if targetDir.checkResourceIsReachable() {
                 NSLog("App support directory \(targetDir) exists.")
                 // If the target directory is already in use, don't copy files over ones already there.
                 movedFiles = true
             }
                 
-            let dir = "~/.config/NzbDrone".stringByExpandingTildeInPath
+            let dir = NSURL(fileURLWithPath: NSString(string: "~/.config/NzbDrone").stringByExpandingTildeInPath)
             
-            if fileManager.fileExistsAtPath(dir) {
+            if dir.checkResourceIsReachable() {
                 if !isSymbolicLink(dir) {
                     if !movedFiles {
                         moveFiles(dir, dest: targetDir)
@@ -60,9 +60,9 @@ class Migrate {
                 }
             }
             
-            if let dir = localDomainDir?.stringByAppendingPathComponent("NzbDrone") {
+            if let dir = localDomainDir?.URLByAppendingPathComponent("NzbDrone") {
                 
-                if fileManager.fileExistsAtPath(dir) {
+                if dir.checkResourceIsReachable() {
                     if !movedFiles {
                         moveFiles(dir, dest: targetDir)
                         movedFiles = true
@@ -72,9 +72,9 @@ class Migrate {
                 }
             }
             
-            if let dir = userDomainDir?.stringByAppendingPathComponent("NzbDrone") {
+            if let dir = userDomainDir?.URLByAppendingPathComponent("NzbDrone") {
                 
-                if fileManager.fileExistsAtPath(dir) {
+                if dir.checkResourceIsReachable() {
                     if !movedFiles {
                         moveFiles(dir, dest: targetDir)
                         movedFiles = true
@@ -91,9 +91,9 @@ class Migrate {
 
             
             // Update symlink
-            let linkPath = "~/.config/NzbDrone".stringByExpandingTildeInPath
+            let linkPath = NSURL(fileURLWithPath: NSString(string: "~/.config/NzbDrone").stringByExpandingTildeInPath)
             
-            if fileManager.fileExistsAtPath(linkPath) {
+            if linkPath.checkResourceIsReachable() {
                 if !isSymbolicLinkTo(linkPath, dest: targetDir) {  // check for symlink to wrong destination
                     deleteFiles(linkPath)
                     createSymlink(linkPath, dest: targetDir)
@@ -103,8 +103,8 @@ class Migrate {
             }
             
             // Remove old bin directory if it exists
-            let binDir = targetDir.stringByAppendingPathComponent("bin")
-            if fileManager.fileExistsAtPath(binDir) {
+            let binDir = targetDir.URLByAppendingPathComponent("bin")
+            if binDir.checkResourceIsReachable() {
                 deleteFiles(binDir)
             }
 
@@ -118,12 +118,12 @@ class Migrate {
     }
     
     
-    func moveFiles(path: String, dest: String) -> Bool {
+    func moveFiles(path: NSURL, dest: NSURL) -> Bool {
 
         NSLog("Moving files from \(path) to \(dest)")
 
         do {
-            try fileManager.moveItemAtPath(path, toPath: dest)
+            try fileManager.moveItemAtURL(path, toURL: dest)
             return true
         } catch let error as NSError {
             NSLog("Error moving files: " + error.localizedDescription)
@@ -132,44 +132,44 @@ class Migrate {
     }
     
     
-    func deleteFiles(path: String) {
+    func deleteFiles(path: NSURL) {
 
         NSLog("Deleting files from \(path)")
         do {
-            try fileManager.removeItemAtPath(path)
+            try fileManager.removeItemAtURL(path)
         } catch let error as NSError {
             NSLog("Error deleting files: " + error.localizedDescription)
         }
     }
     
     
-    func createDirectory(path: String) {
+    func createDirectory(path: NSURL) {
 
         NSLog("Creating directory at \(path)")
         do {
-            try fileManager.createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil)
+            try fileManager.createDirectoryAtURL(path, withIntermediateDirectories: true, attributes: nil)
         } catch let error as NSError {
             NSLog("Error creating directory: " + error.localizedDescription)
         }
     }
     
     
-    func createSymlink(path: String, dest: String) {
+    func createSymlink(path: NSURL, dest: NSURL) {
 
         NSLog("Creating symlink from \(path) to \(dest)")
         do {
-            try fileManager.createSymbolicLinkAtPath(path, withDestinationPath: dest)
+            try fileManager.createSymbolicLinkAtURL(path, withDestinationURL: dest)
         } catch let error as NSError {
             NSLog("Error creating symlink: " + error.localizedDescription)
         }
     }
     
     
-    func isSymbolicLink(path: String) -> Bool {
+    func isSymbolicLink(path: NSURL) -> Bool {
 
         //NSLog("Checking if \(path) is a symlink.")
         do {
-            let fileType = try fileManager.attributesOfItemAtPath(path)[NSFileType] as? String
+            let fileType = try fileManager.attributesOfItemAtPath(path.path!)[NSFileType] as? String
             if fileType == NSFileTypeSymbolicLink {
                 return true
             }
@@ -180,12 +180,12 @@ class Migrate {
         return false
     }
     
-    func isSymbolicLinkTo(path: String, dest: String) -> Bool {
+    func isSymbolicLinkTo(path: NSURL, dest: NSURL) -> Bool {
 
         //NSLog("Checking if \(path) is a symlink to \(dest)...")
         if isSymbolicLink(path) {
             do {
-                let linkDest = try fileManager.destinationOfSymbolicLinkAtPath(path)
+                let linkDest = try fileManager.destinationOfSymbolicLinkAtPath(path.path!)
                 if linkDest == dest {
                     return true
                 }
