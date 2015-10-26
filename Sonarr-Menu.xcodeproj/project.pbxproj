@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7C51C2751BD9E2B5003D75F9 /* ProcessList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C51C2741BD9E2B5003D75F9 /* ProcessList.swift */; };
+		7C728C6F1BDD2BBC0046D6C7 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C728C6E1BDD2BBC0046D6C7 /* Shell.swift */; };
 		7CAA74041BD8D069009C4B37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAA74031BD8D069009C4B37 /* AppDelegate.swift */; };
 		7CAA74061BD8D069009C4B37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CAA74051BD8D069009C4B37 /* Assets.xcassets */; };
 		7CAA74091BD8D069009C4B37 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7CAA74071BD8D069009C4B37 /* MainMenu.xib */; };
@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7C51C2741BD9E2B5003D75F9 /* ProcessList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessList.swift; sourceTree = "<group>"; };
+		7C728C6E1BDD2BBC0046D6C7 /* Shell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
 		7CAA74001BD8D069009C4B37 /* Sonarr-Menu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sonarr-Menu.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CAA74031BD8D069009C4B37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CAA74051BD8D069009C4B37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -61,8 +61,8 @@
 				7CAA74031BD8D069009C4B37 /* AppDelegate.swift */,
 				7CAA74151BD8D981009C4B37 /* LaunchAgent.swift */,
 				7CAA741D1BD9364F009C4B37 /* SonarrApp.swift */,
-				7C51C2741BD9E2B5003D75F9 /* ProcessList.swift */,
 				7CAA74191BD929A6009C4B37 /* SonarrConfig.swift */,
+				7C728C6E1BDD2BBC0046D6C7 /* Shell.swift */,
 				7CAA74051BD8D069009C4B37 /* Assets.xcassets */,
 				7CAA74071BD8D069009C4B37 /* MainMenu.xib */,
 				7CAA740A1BD8D069009C4B37 /* Info.plist */,
@@ -140,11 +140,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C728C6F1BDD2BBC0046D6C7 /* Shell.swift in Sources */,
 				7CAA741E1BD9364F009C4B37 /* SonarrApp.swift in Sources */,
 				7CAA74161BD8D981009C4B37 /* LaunchAgent.swift in Sources */,
 				7CAA741A1BD929A6009C4B37 /* SonarrConfig.swift in Sources */,
 				7CAA74041BD8D069009C4B37 /* AppDelegate.swift in Sources */,
-				7C51C2751BD9E2B5003D75F9 /* ProcessList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +248,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Sonarr-Menu/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "tv.sonarr.Sonarr-Menu";
@@ -262,6 +264,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "Sonarr-Menu/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "tv.sonarr.Sonarr-Menu";

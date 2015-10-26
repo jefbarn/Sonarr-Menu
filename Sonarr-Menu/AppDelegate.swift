@@ -9,7 +9,7 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var loginMenuItem: NSMenuItem!
@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     var statusItem: NSStatusItem!
     
-    let sonarrConfig = SonarrConfig()
+    lazy var sonarrConfig = SonarrConfig()
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         
@@ -47,17 +47,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
     
-    func menuWillOpen(menu: NSMenu) {
-        
-        if SonarrApp.isRunning() {
-            statusMenuItem.title = "Running"
-            statusMenuItem.enabled = false
-        } else {
-            statusMenuItem.title = "Start Sonarr"
-            statusMenuItem.enabled = true
-        }
-    }
-    
     @IBAction func startAction(sender: NSMenuItem) {
         SonarrApp.start()
     }
@@ -66,9 +55,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NSWorkspace.sharedWorkspace().openURL(sonarrConfig.webInterfaceURL())
     }
 
+    @IBAction func consoleAction(sender: NSMenuItem) {
+        let logFile = NSString(string: SonarrConfig.path()).stringByAppendingPathComponent("logs/nzbdrone.txt")
+        NSWorkspace.sharedWorkspace().openFile(logFile, withApplication: "Console")
+    }
+    
     @IBAction func homepageAction(sender: NSMenuItem) {
         let homepageUrl = NSURL(string: "https://sonarr.tv/")!
         NSWorkspace.sharedWorkspace().openURL(homepageUrl)
+    }
+    
+    @IBAction func aboutAction(sender: NSMenuItem) {
+        NSApp.activateIgnoringOtherApps(true)
+        NSApp.orderFrontStandardAboutPanel(self)
     }
 
     @IBAction func runAtLoginAction(sender: NSMenuItem) {
@@ -84,5 +83,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBAction func quitAction(sender: NSMenuItem) {
         SonarrApp.stop()
         NSApp.terminate(self)
+    }
+}
+
+extension AppDelegate: NSMenuDelegate {
+    
+    func menuWillOpen(menu: NSMenu) {
+        
+        if SonarrApp.isRunning() {
+            statusMenuItem.title = "Running"
+            statusMenuItem.enabled = false
+        } else {
+            statusMenuItem.title = "Start Sonarr"
+            statusMenuItem.enabled = true
+        }
     }
 }

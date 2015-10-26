@@ -31,19 +31,19 @@ class SonarrConfig {
         // Set up monitoring of config file.
         // If the config file has not been created yet, then monitor the Support directory until it becomes available.
         
-        if fm.fileExistsAtPath(configFile()) {
-            dispatchSource = monitorChangesToFile(configFile(), handler: readConfig)
+        if fm.fileExistsAtPath(SonarrConfig.xmlFile()) {
+            dispatchSource = monitorChangesToFile(SonarrConfig.xmlFile(), handler: readConfig)
         } else {
-            if fm.fileExistsAtPath(configDir()) == false {
-                _ = try? self.fm.createDirectoryAtPath(self.configDir(), withIntermediateDirectories: true, attributes: nil)
+            if fm.fileExistsAtPath(SonarrConfig.path()) == false {
+                _ = try? self.fm.createDirectoryAtPath(SonarrConfig.path(), withIntermediateDirectories: true, attributes: nil)
             }
             
-            dispatchSource = monitorChangesToFile(configDir()) {
+            dispatchSource = monitorChangesToFile(SonarrConfig.path()) {
                 
-                if self.fm.fileExistsAtPath(self.configFile()) {
+                if self.fm.fileExistsAtPath(SonarrConfig.xmlFile()) {
                     if self.dispatchSource != nil { dispatch_source_cancel(self.dispatchSource!) }
                     self.readConfig()
-                    self.dispatchSource = self.monitorChangesToFile(self.configFile(), handler: self.readConfig)
+                    self.dispatchSource = self.monitorChangesToFile(SonarrConfig.xmlFile(), handler: self.readConfig)
                 }
             }
         }
@@ -92,7 +92,7 @@ class SonarrConfig {
         configDict = [:]
         
         do {
-            let xmlDoc = try NSXMLDocument(contentsOfURL: NSURL(fileURLWithPath: configFile()), options: Int(NSXMLDocumentTidyXML))
+            let xmlDoc = try NSXMLDocument(contentsOfURL: NSURL(fileURLWithPath: SonarrConfig.xmlFile()), options: Int(NSXMLDocumentTidyXML))
             
             let nodes = try xmlDoc.nodesForXPath("Config/*")
             for node in nodes {
@@ -104,15 +104,15 @@ class SonarrConfig {
     }
     
     
-    func configDir() -> String {
+    static func path() -> String {
         
         return NSString(string: "~/.config/NzbDrone/").stringByExpandingTildeInPath
     }
     
     
-    func configFile() -> String {
+    static func xmlFile() -> String {
         
-        return NSString(string: configDir()).stringByAppendingPathComponent("config.xml")
+        return NSString(string: path()).stringByAppendingPathComponent("config.xml")
     }
     
     
@@ -129,11 +129,15 @@ class SonarrConfig {
     }
     
     func addMenuHook() {
-        
+
         let file = SonarrApp.executablePath()
-        let hook = "open -a Sonarr-Menu"
+        let hook = "open -a \(NSBundle.mainBundle().bundlePath)"
         
-        system("grep -q '\(hook)' \(file) || perl -i -ple 'print \"\(hook)\" if /MONO_EXEC=/' \(file)")
+        if Shell.command("grep '\(hook)' '\(file)'").exitStatus == Shell.Grep.NotFound {  // Didn't find current bundle hook
+            NSLog("Adding menu hook \(hook) to Sonarr bundle \(file).")
+            Shell.command("perl -i -nle 'print unless /Sonarr-Menu/' \(file)")
+            Shell.command("perl -i -ple 'print \"\(hook)\" if /MONO_EXEC=/' \(file)")
+        }
+
     }
-    
 }

@@ -35,6 +35,12 @@
                         <action selector="webInterfaceAction:" target="Voe-Tx-rLC" id="veg-i4-vJd"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Show Console" id="YGH-Ho-Nob">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="consoleAction:" target="Voe-Tx-rLC" id="2dg-og-sU6"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Homepage" id="jBK-HX-Sea">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -42,6 +48,12 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="Jq8-qH-XLq"/>
+                <menuItem title="About Sonarr" id="DW4-6o-dMM">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="aboutAction:" target="Voe-Tx-rLC" id="sZ4-Uu-FZb"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Run At Login" id="rdo-2P-n8Z">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -56,7 +68,7 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-144.5" y="-26.5"/>
+            <point key="canvasLocation" x="-439.5" y="-64.5"/>
         </menu>
     </objects>
 </document>
