@@ -10,38 +10,61 @@ import Cocoa
 
 class LaunchAgent {
     
-    private static let fm = NSFileManager.defaultManager()
+    let fm = NSFileManager.defaultManager()
     
+    var launchAgentDirectory: NSURL
+    var launchAgentFile: NSURL
     
-    class func add() {
+    init() {
+        do {
+            let libDir = try fm.URLForDirectory(.LibraryDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
+            launchAgentDirectory = libDir.URLByAppendingPathComponent("LaunchAgents")
+        } catch let error as NSError {
+            showAlert("Error, could not locate user Library directory. Exiting.", error: error)
+            abort()
+        }
+        
+        launchAgentFile = launchAgentDirectory.URLByAppendingPathComponent("tv.sonarr.Sonarr-Menu.plist")
+    }
+    
+    func add() -> Bool {
+        
+        // Create LaunchAgent directory if it doesn't exist.
+        do {
+            if try launchAgentDirectory.checkResourceIsReachable() == false {
+                try fm.createDirectoryAtURL(launchAgentDirectory, withIntermediateDirectories: false, attributes: nil)
+            }
+        } catch let error as NSError {
+            showAlert("Error accessing LaunchAgent directory", error: error)
+            return false
+        }
+        
+        guard let execPath = NSBundle.mainBundle().executablePath else {
+            showAlert("Could not look up executable path.")
+            return false
+        }
+        
         // Create plist with correct executeable
-        let plistDict = NSMutableDictionary()
+        let plistDict: NSDictionary = [
+            "Label": "tv.sonarr.Sonarr-Menu",
+            "Program": execPath,
+            "RunAtLoad": true
+        ]
         
-        plistDict.setObject("com.osx.sonarr.tv.job", forKey: "Label")
-        plistDict.setObject(SonarrApp.executablePath(), forKey: "Program")
-        plistDict.setObject(true, forKey: "RunAtLoad")
+        plistDict.writeToURL(launchAgentFile, atomically: true)
         
-        plistDict.writeToURL(launchAgentURL(), atomically: true)
+        return true
     }
     
-    
-    class func remove() {
+    func remove() {
         
-        _ = try? fm.removeItemAtURL(launchAgentURL())
+        _ = try? fm.removeItemAtURL(launchAgentFile)
     }
     
-    
-    class func active() -> Bool {
-        
-        return fm.fileExistsAtPath(launchAgentURL().path!)
+    func active() -> Bool {
+        let reachable = try? launchAgentFile.checkResourceIsReachable()
+        return reachable ?? false
     }
     
-    
-    private class func launchAgentURL() -> NSURL {
-        
-        let libDir = try! fm.URLForDirectory(.LibraryDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false)
-        let agentURL = libDir.URLByAppendingPathComponent("LaunchAgents/SonarrAgent.plist")
-        
-        return agentURL
-    }
+
 }

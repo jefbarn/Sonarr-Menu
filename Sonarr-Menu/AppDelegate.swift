@@ -17,7 +17,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var statusItem: NSStatusItem!
     
-    lazy var sonarrConfig = SonarrConfig()
+    let sonarrConfig = SonarrConfig()
+    let launchAgent = LaunchAgent()
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         
@@ -28,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.image!.template = true
         statusItem.highlightMode = true
         
-        if LaunchAgent.active() {
+        if launchAgent.active() {
             loginMenuItem.state = NSOnState
         } else {
             loginMenuItem.state = NSOffState
@@ -56,7 +57,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @IBAction func consoleAction(sender: NSMenuItem) {
-        let logFile = NSString(string: SonarrConfig.path()).stringByAppendingPathComponent("logs/nzbdrone.txt")
+        let logFile = NSString(string: sonarrConfig.configDirectory).stringByAppendingPathComponent("logs/nzbdrone.txt")
         NSWorkspace.sharedWorkspace().openFile(logFile, withApplication: "Console")
     }
     
@@ -72,10 +73,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBAction func runAtLoginAction(sender: NSMenuItem) {
         if sender.state == NSOffState {
-            LaunchAgent.add()
-            sender.state = NSOnState
+            if launchAgent.add() {
+                sender.state = NSOnState
+            }
         } else {
-            LaunchAgent.remove()
+            launchAgent.remove()
             sender.state = NSOffState
         }
     }

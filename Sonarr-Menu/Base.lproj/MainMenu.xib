@@ -35,7 +35,7 @@
                         <action selector="webInterfaceAction:" target="Voe-Tx-rLC" id="veg-i4-vJd"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Show Console" id="YGH-Ho-Nob">
+                <menuItem title="Console" id="YGH-Ho-Nob">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="consoleAction:" target="Voe-Tx-rLC" id="2dg-og-sU6"/>

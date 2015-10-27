@@ -10,19 +10,34 @@ import Cocoa
 
 class SonarrApp {
 
-    static let bundleId = "com.osx.sonarr.tv"
+    static let sonarrBundleId = "com.osx.sonarr.tv"
     
-    class func start() {
+    class func start() -> Bool {
+        
+        let workspace = NSWorkspace.sharedWorkspace()
+        
+        guard let sonarrPath = workspace.absolutePathForAppBundleWithIdentifier(sonarrBundleId) else {
+            showAlert("Could not find Sonarr.app", descripton: "Do you have it installed?")
+            return false
+        }
+        NSLog("Launching Sonarr: \(sonarrPath)")
+        
 
-        NSWorkspace.sharedWorkspace().launchAppWithBundleIdentifier(bundleId, options: .Async, additionalEventParamDescriptor: nil, launchIdentifier: nil)
+        let launched = workspace.launchAppWithBundleIdentifier(sonarrBundleId, options: .Async,
+            additionalEventParamDescriptor: nil, launchIdentifier: nil)
+        guard launched else {
+            showAlert("Could not launch Sonarr.app")
+            return false
+        }
         
         if let pid = findSonarrProcessIdentifiers().first {
             NSLog("SonarrApp->start (\(pid))")
         } else {
             NSLog("SonarrApp->start (???)")
         }
+        
+        return true
     }
-    
     
     class func stop() {
 
@@ -32,7 +47,6 @@ class SonarrApp {
         }
     }
    
-    
     class func isRunning(shouldLog shouldLog: Bool = false) -> Bool {
 
         let pids = findSonarrProcessIdentifiers()
@@ -48,27 +62,10 @@ class SonarrApp {
         }
     }
     
-    
-    class func executablePath() -> String {
-        
-        guard let path = NSWorkspace.sharedWorkspace().absolutePathForAppBundleWithIdentifier(bundleId) else {
-            NSLog("Error, could not find Sonarr bundle path. Exiting.")
-            abort()
-        }
-        
-        guard let execPath = NSBundle(path: path)?.executablePath else {
-            NSLog("Error, could not find Sonarr bundle exectable. Exiting.")
-            abort()
-        }
-        
-        return execPath
-    }
-    
-    
     static func findSonarrProcessIdentifiers() -> [pid_t] {
         
         // Try the easy way first
-        let apps = NSRunningApplication.runningApplicationsWithBundleIdentifier(bundleId)
+        let apps = NSRunningApplication.runningApplicationsWithBundleIdentifier(sonarrBundleId)
         if apps.count > 0 {
             return apps.map{$0.processIdentifier}
         }

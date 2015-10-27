@@ -15,40 +15,37 @@ class SonarrConfig {
     var configDict = [String: NSString]()
     
     var dispatchSource: dispatch_source_t?
-    var hookMonitor: dispatch_source_t?
+    
+    var configDirectory: String
+    var configXmlFile: String
     
     init() {
         
-        // Add hook to script in Sonarr app bundle, and monitor the file for changes
-        addMenuHook()
-        hookMonitor = monitorChangesToFile(SonarrApp.executablePath()) {
-            NSLog("Sonarr script modified, verifing menu hook still in place.")
-            self.addMenuHook()
-        }
+        configDirectory = NSString(string: "~/.config/NzbDrone/").stringByExpandingTildeInPath
+        configXmlFile = NSString(string: configDirectory).stringByAppendingPathComponent("config.xml")
         
         readConfig()
         
         // Set up monitoring of config file.
         // If the config file has not been created yet, then monitor the Support directory until it becomes available.
         
-        if fm.fileExistsAtPath(SonarrConfig.xmlFile()) {
-            dispatchSource = monitorChangesToFile(SonarrConfig.xmlFile(), handler: readConfig)
+        if fm.fileExistsAtPath(configXmlFile) {
+            dispatchSource = monitorChangesToFile(configXmlFile, handler: readConfig)
         } else {
-            if fm.fileExistsAtPath(SonarrConfig.path()) == false {
-                _ = try? self.fm.createDirectoryAtPath(SonarrConfig.path(), withIntermediateDirectories: true, attributes: nil)
+            if fm.fileExistsAtPath(configDirectory) == false {
+                _ = try? self.fm.createDirectoryAtPath(configDirectory, withIntermediateDirectories: true, attributes: nil)
             }
             
-            dispatchSource = monitorChangesToFile(SonarrConfig.path()) {
+            dispatchSource = monitorChangesToFile(configDirectory) {
                 
-                if self.fm.fileExistsAtPath(SonarrConfig.xmlFile()) {
+                if self.fm.fileExistsAtPath(self.configXmlFile) {
                     if self.dispatchSource != nil { dispatch_source_cancel(self.dispatchSource!) }
                     self.readConfig()
-                    self.dispatchSource = self.monitorChangesToFile(SonarrConfig.xmlFile(), handler: self.readConfig)
+                    self.dispatchSource = self.monitorChangesToFile(self.configXmlFile, handler: self.readConfig)
                 }
             }
         }
     }
-    
     
     func monitorChangesToFile(filename: String, handler: ()->()) -> dispatch_source_t? {
         
@@ -86,35 +83,21 @@ class SonarrConfig {
         return nil
     }
     
-    
     func readConfig() {
 
         configDict = [:]
         
         do {
-            let xmlDoc = try NSXMLDocument(contentsOfURL: NSURL(fileURLWithPath: SonarrConfig.xmlFile()), options: Int(NSXMLDocumentTidyXML))
+            let xmlDoc = try NSXMLDocument(contentsOfURL: NSURL(fileURLWithPath: configXmlFile), options: Int(NSXMLDocumentTidyXML))
             
             let nodes = try xmlDoc.nodesForXPath("Config/*")
             for node in nodes {
                 configDict[node.name!] = node.stringValue!
             }
         } catch let error as NSError {
-            NSLog("Error reading config file: ", error.description)
+            NSLog("Error reading config file: \(error.description)")
         }
     }
-    
-    
-    static func path() -> String {
-        
-        return NSString(string: "~/.config/NzbDrone/").stringByExpandingTildeInPath
-    }
-    
-    
-    static func xmlFile() -> String {
-        
-        return NSString(string: path()).stringByAppendingPathComponent("config.xml")
-    }
-    
     
     func webInterfaceURL() -> NSURL {
         
@@ -126,18 +109,5 @@ class SonarrConfig {
     
     func shouldLaunchBrowser() -> Bool {
         return configDict["LaunchBrowser"]?.boolValue ?? false
-    }
-    
-    func addMenuHook() {
-
-        let file = SonarrApp.executablePath()
-        let hook = "open -a \(NSBundle.mainBundle().bundlePath)"
-        
-        if Shell.command("grep '\(hook)' '\(file)'").exitStatus == Shell.Grep.NotFound {  // Didn't find current bundle hook
-            NSLog("Adding menu hook \(hook) to Sonarr bundle \(file).")
-            Shell.command("perl -i -nle 'print unless /Sonarr-Menu/' \(file)")
-            Shell.command("perl -i -ple 'print \"\(hook)\" if /MONO_EXEC=/' \(file)")
-        }
-
     }
 }
