@@ -1,5 +1,5 @@
 # Sonarr-Menu
-#####Version 3 of OSX Status Menu for Sonarr 
+#####OSX Status Menu for Sonarr 
 
 This is a small utility that adds a menu to the Status Bar for managing [Sonarr](https://sonarr.tv).
 
