@@ -7,37 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7C16B22A1A542C5A0038B403 /* MonoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C16B2281A542C5A0038B403 /* MonoDialog.swift */; };
-		7C16B22B1A542C5A0038B403 /* MonoDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C16B2291A542C5A0038B403 /* MonoDialog.xib */; };
-		7C4CFB1F1A5CCE9C009A6021 /* DaemonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFB1E1A5CCE9C009A6021 /* DaemonController.swift */; };
-		7C533F211A5280C100E1473B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C533F201A5280C100E1473B /* AppDelegate.swift */; };
-		7C533F231A5280C100E1473B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C533F221A5280C100E1473B /* Images.xcassets */; };
-		7C533F261A5280C100E1473B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C533F241A5280C100E1473B /* MainMenu.xib */; };
-		7C533F3E1A52811C00E1473B /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C533F3D1A52811C00E1473B /* Tools.swift */; };
-		7C83514B1A5948280040C5BA /* Migrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C83514A1A5948280040C5BA /* Migrate.swift */; };
-		7C83514D1A5974B00040C5BA /* DownloadSonarr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C83514C1A5974B00040C5BA /* DownloadSonarr.swift */; };
-		7C83514F1A597FEF0040C5BA /* LoginItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C83514E1A597FEF0040C5BA /* LoginItems.swift */; };
-		7CB5E3C21A5993D700F9A2DC /* MoveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5E3C11A5993D700F9A2DC /* MoveApp.swift */; };
+		282F23191BE042F6007B7148 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 282F23171BE042F6007B7148 /* InfoPlist.strings */; };
+		28C10EE61BE0461A0072150B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28C10EE41BE0461A0072150B /* Localizable.strings */; };
+		7C728C6F1BDD2BBC0046D6C7 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C728C6E1BDD2BBC0046D6C7 /* Tools.swift */; };
+		7CAA74041BD8D069009C4B37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAA74031BD8D069009C4B37 /* AppDelegate.swift */; };
+		7CAA74061BD8D069009C4B37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CAA74051BD8D069009C4B37 /* Assets.xcassets */; };
+		7CAA74091BD8D069009C4B37 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7CAA74071BD8D069009C4B37 /* MainMenu.xib */; };
+		7CAA74161BD8D981009C4B37 /* LaunchAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAA74151BD8D981009C4B37 /* LaunchAgent.swift */; };
+		7CAA741A1BD929A6009C4B37 /* SonarrConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAA74191BD929A6009C4B37 /* SonarrConfig.swift */; };
+		7CAA741E1BD9364F009C4B37 /* SonarrApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAA741D1BD9364F009C4B37 /* SonarrApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7C16B2281A542C5A0038B403 /* MonoDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MonoDialog.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		7C16B2291A542C5A0038B403 /* MonoDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MonoDialog.xib; sourceTree = "<group>"; };
-		7C4CFB1E1A5CCE9C009A6021 /* DaemonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DaemonController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		7C533F1B1A5280C100E1473B /* Sonarr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sonarr.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C533F1F1A5280C100E1473B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7C533F201A5280C100E1473B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7C533F221A5280C100E1473B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		7C533F251A5280C100E1473B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		7C533F3D1A52811C00E1473B /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Tools.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		7C83514A1A5948280040C5BA /* Migrate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Migrate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		7C83514C1A5974B00040C5BA /* DownloadSonarr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadSonarr.swift; sourceTree = "<group>"; };
-		7C83514E1A597FEF0040C5BA /* LoginItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginItems.swift; sourceTree = "<group>"; };
-		7CB5E3C11A5993D700F9A2DC /* MoveApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveApp.swift; sourceTree = "<group>"; };
+		282F23181BE042F6007B7148 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "Sonarr-Menu/de.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		284F77991BE0370200713A01 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		28C10EE51BE0461A0072150B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "Sonarr-Menu/en.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		28E158CA1BE0464100FA4DB1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "Sonarr-Menu/de.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7C1468B01BE08AEE004A8FD0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Sonarr-Menu/Info.plist"; sourceTree = "<group>"; };
+		7C1468B51BE091D5004A8FD0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "Sonarr-Menu/en.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		7C1468B91BE09250004A8FD0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		7C728C6E1BDD2BBC0046D6C7 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		7CAA74001BD8D069009C4B37 /* Sonarr-Menu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sonarr-Menu.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CAA74031BD8D069009C4B37 /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 4; };
+		7CAA74051BD8D069009C4B37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7CAA74081BD8D069009C4B37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		7CAA74151BD8D981009C4B37 /* LaunchAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchAgent.swift; sourceTree = "<group>"; };
+		7CAA74191BD929A6009C4B37 /* SonarrConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SonarrConfig.swift; sourceTree = "<group>"; };
+		7CAA741D1BD9364F009C4B37 /* SonarrApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SonarrApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		7C533F181A5280C100E1473B /* Frameworks */ = {
+		7CAA73FD1BD8D069009C4B37 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -47,138 +47,148 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7C533F121A5280C100E1473B = {
+		7CAA73F71BD8D069009C4B37 = {
 			isa = PBXGroup;
 			children = (
-				7C533F1D1A5280C100E1473B /* Sonarr */,
-				7C533F1C1A5280C100E1473B /* Products */,
+				7C1468B01BE08AEE004A8FD0 /* Info.plist */,
+				282F23171BE042F6007B7148 /* InfoPlist.strings */,
+				7CAA74021BD8D069009C4B37 /* Sonarr-Menu */,
+				7CAA74011BD8D069009C4B37 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		7C533F1C1A5280C100E1473B /* Products */ = {
+		7CAA74011BD8D069009C4B37 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7C533F1B1A5280C100E1473B /* Sonarr.app */,
+				7CAA74001BD8D069009C4B37 /* Sonarr-Menu.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7C533F1D1A5280C100E1473B /* Sonarr */ = {
+		7CAA74021BD8D069009C4B37 /* Sonarr-Menu */ = {
 			isa = PBXGroup;
 			children = (
-				7C533F3D1A52811C00E1473B /* Tools.swift */,
-				7C533F201A5280C100E1473B /* AppDelegate.swift */,
-				7CB5E3C11A5993D700F9A2DC /* MoveApp.swift */,
-				7C83514E1A597FEF0040C5BA /* LoginItems.swift */,
-				7C83514A1A5948280040C5BA /* Migrate.swift */,
-				7C533F221A5280C100E1473B /* Images.xcassets */,
-				7C533F241A5280C100E1473B /* MainMenu.xib */,
-				7C4CFB1E1A5CCE9C009A6021 /* DaemonController.swift */,
-				7C16B2281A542C5A0038B403 /* MonoDialog.swift */,
-				7C16B2291A542C5A0038B403 /* MonoDialog.xib */,
-				7C83514C1A5974B00040C5BA /* DownloadSonarr.swift */,
-				7C533F1E1A5280C100E1473B /* Supporting Files */,
+				7CAA74031BD8D069009C4B37 /* AppDelegate.swift */,
+				7CAA74151BD8D981009C4B37 /* LaunchAgent.swift */,
+				7CAA741D1BD9364F009C4B37 /* SonarrApp.swift */,
+				7CAA74191BD929A6009C4B37 /* SonarrConfig.swift */,
+				7C728C6E1BDD2BBC0046D6C7 /* Tools.swift */,
+				7CAA74051BD8D069009C4B37 /* Assets.xcassets */,
+				7CAA74071BD8D069009C4B37 /* MainMenu.xib */,
+				28C10EE41BE0461A0072150B /* Localizable.strings */,
 			);
-			path = Sonarr;
-			sourceTree = "<group>";
-		};
-		7C533F1E1A5280C100E1473B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				7C533F1F1A5280C100E1473B /* Info.plist */,
-			);
-			name = "Supporting Files";
+			path = "Sonarr-Menu";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7C533F1A1A5280C100E1473B /* Sonarr */ = {
+		7CAA73FF1BD8D069009C4B37 /* Sonarr-Menu */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7C533F351A5280C100E1473B /* Build configuration list for PBXNativeTarget "Sonarr" */;
+			buildConfigurationList = 7CAA740D1BD8D069009C4B37 /* Build configuration list for PBXNativeTarget "Sonarr-Menu" */;
 			buildPhases = (
-				7C533F171A5280C100E1473B /* Sources */,
-				7C533F181A5280C100E1473B /* Frameworks */,
-				7C533F191A5280C100E1473B /* Resources */,
+				7CAA73FC1BD8D069009C4B37 /* Sources */,
+				7CAA73FD1BD8D069009C4B37 /* Frameworks */,
+				7CAA73FE1BD8D069009C4B37 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Sonarr;
-			productName = Sonarr;
-			productReference = 7C533F1B1A5280C100E1473B /* Sonarr.app */;
+			name = "Sonarr-Menu";
+			productName = "Sonarr-Menu";
+			productReference = 7CAA74001BD8D069009C4B37 /* Sonarr-Menu.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		7C533F131A5280C100E1473B /* Project object */ = {
+		7CAA73F81BD8D069009C4B37 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Sonarr;
 				TargetAttributes = {
-					7C533F1A1A5280C100E1473B = {
-						CreatedOnToolsVersion = 6.1.1;
+					7CAA73FF1BD8D069009C4B37 = {
+						CreatedOnToolsVersion = 7.1;
 					};
 				};
 			};
-			buildConfigurationList = 7C533F161A5280C100E1473B /* Build configuration list for PBXProject "Sonarr" */;
+			buildConfigurationList = 7CAA73FB1BD8D069009C4B37 /* Build configuration list for PBXProject "Sonarr-Menu" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
+				de,
 			);
-			mainGroup = 7C533F121A5280C100E1473B;
-			productRefGroup = 7C533F1C1A5280C100E1473B /* Products */;
+			mainGroup = 7CAA73F71BD8D069009C4B37;
+			productRefGroup = 7CAA74011BD8D069009C4B37 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7C533F1A1A5280C100E1473B /* Sonarr */,
+				7CAA73FF1BD8D069009C4B37 /* Sonarr-Menu */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		7C533F191A5280C100E1473B /* Resources */ = {
+		7CAA73FE1BD8D069009C4B37 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C533F231A5280C100E1473B /* Images.xcassets in Resources */,
-				7C16B22B1A542C5A0038B403 /* MonoDialog.xib in Resources */,
-				7C533F261A5280C100E1473B /* MainMenu.xib in Resources */,
+				28C10EE61BE0461A0072150B /* Localizable.strings in Resources */,
+				282F23191BE042F6007B7148 /* InfoPlist.strings in Resources */,
+				7CAA74061BD8D069009C4B37 /* Assets.xcassets in Resources */,
+				7CAA74091BD8D069009C4B37 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		7C533F171A5280C100E1473B /* Sources */ = {
+		7CAA73FC1BD8D069009C4B37 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C83514F1A597FEF0040C5BA /* LoginItems.swift in Sources */,
-				7C4CFB1F1A5CCE9C009A6021 /* DaemonController.swift in Sources */,
-				7C16B22A1A542C5A0038B403 /* MonoDialog.swift in Sources */,
-				7C83514B1A5948280040C5BA /* Migrate.swift in Sources */,
-				7C533F3E1A52811C00E1473B /* Tools.swift in Sources */,
-				7CB5E3C21A5993D700F9A2DC /* MoveApp.swift in Sources */,
-				7C533F211A5280C100E1473B /* AppDelegate.swift in Sources */,
-				7C83514D1A5974B00040C5BA /* DownloadSonarr.swift in Sources */,
+				7C728C6F1BDD2BBC0046D6C7 /* Tools.swift in Sources */,
+				7CAA741E1BD9364F009C4B37 /* SonarrApp.swift in Sources */,
+				7CAA74161BD8D981009C4B37 /* LaunchAgent.swift in Sources */,
+				7CAA741A1BD929A6009C4B37 /* SonarrConfig.swift in Sources */,
+				7CAA74041BD8D069009C4B37 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		7C533F241A5280C100E1473B /* MainMenu.xib */ = {
+		282F23171BE042F6007B7148 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				7C533F251A5280C100E1473B /* Base */,
+				282F23181BE042F6007B7148 /* de */,
+				7C1468B51BE091D5004A8FD0 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		28C10EE41BE0461A0072150B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				28C10EE51BE0461A0072150B /* en */,
+				28E158CA1BE0464100FA4DB1 /* de */,
+			);
+			name = Localizable.strings;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		7CAA74071BD8D069009C4B37 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7CAA74081BD8D069009C4B37 /* Base */,
+				284F77991BE0370200713A01 /* de */,
+				7C1468B91BE09250004A8FD0 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -186,7 +196,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		7C533F331A5280C100E1473B /* Debug */ = {
+		7CAA740B1BD8D069009C4B37 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -205,16 +215,17 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -229,7 +240,7 @@
 			};
 			name = Debug;
 		};
-		7C533F341A5280C100E1473B /* Release */ = {
+		7CAA740C1BD8D069009C4B37 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -247,11 +258,12 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -264,56 +276,59 @@
 			};
 			name = Release;
 		};
-		7C533F361A5280C100E1473B /* Debug */ = {
+		7CAA740E1BD8D069009C4B37 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = Sonarr/Info.plist;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Sonarr-Menu/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_BUNDLE_IDENTIFIER = "tv.sonarr.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "tv.sonarr.Sonarr-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		7C533F371A5280C100E1473B /* Release */ = {
+		7CAA740F1BD8D069009C4B37 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = Sonarr/Info.plist;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "Sonarr-Menu/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_BUNDLE_IDENTIFIER = "tv.sonarr.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "tv.sonarr.Sonarr-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7C533F161A5280C100E1473B /* Build configuration list for PBXProject "Sonarr" */ = {
+		7CAA73FB1BD8D069009C4B37 /* Build configuration list for PBXProject "Sonarr-Menu" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7C533F331A5280C100E1473B /* Debug */,
-				7C533F341A5280C100E1473B /* Release */,
+				7CAA740B1BD8D069009C4B37 /* Debug */,
+				7CAA740C1BD8D069009C4B37 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7C533F351A5280C100E1473B /* Build configuration list for PBXNativeTarget "Sonarr" */ = {
+		7CAA740D1BD8D069009C4B37 /* Build configuration list for PBXNativeTarget "Sonarr-Menu" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7C533F361A5280C100E1473B /* Debug */,
-				7C533F371A5280C100E1473B /* Release */,
+				7CAA740E1BD8D069009C4B37 /* Debug */,
+				7CAA740F1BD8D069009C4B37 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 7C533F131A5280C100E1473B /* Project object */;
+	rootObject = 7CAA73F81BD8D069009C4B37 /* Project object */;
 }

@@ -1,17 +1,15 @@
 //
 //  AppDelegate.swift
-//  Sonarr
+//  Sonarr-Menu
 //
-//  Created by Jeff Barnes on 12/29/14.
-//  Copyright (c) 2014 Sonarr. All rights reserved.
+//  Created by Jeff Barnes on 10/22/15.
+//  Copyright © 2015 Sonarr. All rights reserved.
 //
 
 import Cocoa
 
-let monoPath = NSURL(fileURLWithPath: "/usr/local/bin/mono")
-
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var loginMenuItem: NSMenuItem!
@@ -19,37 +17,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     var statusItem: NSStatusItem!
     
-    var monoDialog: MonoDialog!
-    
-    let homepageUrl = NSURL(string: "https://sonarr.tv/")!
-    
-    let binDir = NSBundle.mainBundle().resourceURL!.URLByAppendingPathComponent("bin")
-       
-    var daemon = DaemonController()
+    let sonarrConfig = SonarrConfig()
+    let launchAgent = LaunchAgent()
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
-               
-        moveToApplicationsFolder()
         
-        _ = Migrate()
-        
-        if MonoDialog.isMonoUpToDate() {
-            createStatusMenu()
-        } else {
-            monoDialog = MonoDialog(windowNibName: "MonoDialog")
-            monoDialog.showDialog(createStatusMenu)
-        }
-    }
-    
-    func createStatusMenu() {
         // Create the status bar menu
-        statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-2)
+        statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSSquareStatusItemLength)
         
         statusItem.image = NSImage(named: "StatusIcon")
         statusItem.image!.template = true
         statusItem.highlightMode = true
         
-        if LoginItems.containsThisApp() {
+        if launchAgent.active() {
             loginMenuItem.state = NSOnState
         } else {
             loginMenuItem.state = NSOffState
@@ -59,58 +39,65 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         statusMenu.delegate = self
         
-        if daemon.isRunning() {
-            NSLog("Another Sonarr process is already running. Please exit any active Sonarr sessions and restart.")
-        } else {
-            daemon.start()
+        if !SonarrApp.isRunning(shouldLog: true) {
+            SonarrApp.start()
+        }
+        
+        if sonarrConfig.shouldLaunchBrowser() {
+            NSWorkspace.sharedWorkspace().openURL(sonarrConfig.webInterfaceURL())
         }
     }
-
-    func applicationWillTerminate(aNotification: NSNotification) {
-        daemon.stop()
-    }
-
-    @IBAction func runDaemonAction(sender: AnyObject) {
-        daemon.start()
-    }
-
-    @IBAction func webInterfaceAction(sender: AnyObject) {
-        NSWorkspace.sharedWorkspace().openURL(daemon.webInterfaceUrl)
+    
+    @IBAction func startAction(sender: NSMenuItem) {
+        SonarrApp.start()
     }
     
-    @IBAction func homepageAction(sender: AnyObject) {
+    @IBAction func webInterfaceAction(sender: NSMenuItem) {
+        NSWorkspace.sharedWorkspace().openURL(sonarrConfig.webInterfaceURL())
+    }
+
+    @IBAction func consoleAction(sender: NSMenuItem) {
+        let logFile = NSString(string: sonarrConfig.configDirectory).stringByAppendingPathComponent("logs/nzbdrone.txt")
+        NSWorkspace.sharedWorkspace().openFile(logFile, withApplication: "Console")
+    }
+    
+    @IBAction func homepageAction(sender: NSMenuItem) {
+        let homepageUrl = NSURL(string: "https://sonarr.tv/")!
         NSWorkspace.sharedWorkspace().openURL(homepageUrl)
     }
     
-    @IBAction func aboutAction(sender: AnyObject) {
-        NSApplication.sharedApplication().orderFrontStandardAboutPanel(self)
+    @IBAction func aboutAction(sender: NSMenuItem) {
+        NSApp.activateIgnoringOtherApps(true)
+        NSApp.orderFrontStandardAboutPanel(self)
     }
-    
-    @IBAction func runAtLoginAction(sender: AnyObject) {
-        if LoginItems.containsThisApp() {
-            LoginItems.removeThisApp();
-            loginMenuItem.state = NSOffState
+
+    @IBAction func runAtLoginAction(sender: NSMenuItem) {
+        if sender.state == NSOffState {
+            if launchAgent.add() {
+                sender.state = NSOnState
+            }
         } else {
-            LoginItems.addThisApp();
-            loginMenuItem.state = NSOnState
+            launchAgent.remove()
+            sender.state = NSOffState
         }
     }
     
-    @IBAction func quitAction(sender: AnyObject) {
-        NSApplication.sharedApplication().terminate(self)
+    @IBAction func quitAction(sender: NSMenuItem) {
+        SonarrApp.stop()
+        NSApp.terminate(self)
     }
-    
+}
+
+extension AppDelegate: NSMenuDelegate {
     
     func menuWillOpen(menu: NSMenu) {
-
-        if daemon.isRunning() {
-            statusMenuItem.title = "Running"
+        
+        if SonarrApp.isRunning() {
+            statusMenuItem.title = NSLocalizedString("SONARR_MENU_ITEM_RUNNING", comment: "Sonarr Menu Status Item Text when running.")
             statusMenuItem.enabled = false
         } else {
-            statusMenuItem.title = "Start Sonarr"
+            statusMenuItem.title = NSLocalizedString("SONARR_MENU_ITEM_START", comment: "Sonarr Menu Status Item Text when stopped.")
             statusMenuItem.enabled = true
         }
     }
-    
 }
-

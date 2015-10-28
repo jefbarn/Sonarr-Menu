@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Sonarr.xcscheme</key>
+		<key>Sonarr-Menu.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,12 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>7C533F1A1A5280C100E1473B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7C533F2A1A5280C100E1473B</key>
+		<key>7CAA73FF1BD8D069009C4B37</key>
 		<dict>
 			<key>primary</key>
 			<true/>
