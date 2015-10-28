@@ -7,31 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7C2532D61971413F00C66EF7 /* LoginItems.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C2532D51971413F00C66EF7 /* LoginItems.m */; };
-		7C4082571970DECD00425210 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4082561970DECD00425210 /* Tools.swift */; };
-		7C40825D1970DF4D00425210 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C40825C1970DF4D00425210 /* Images.xcassets */; };
-		7C4082601970E2BD00425210 /* icon_black_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C40825F1970E2BD00425210 /* icon_black_16.png */; };
-		7C4082621970E2CB00425210 /* icon_white_16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4082611970E2CB00425210 /* icon_white_16.png */; };
-		7C7C872A196F72B50091A3DD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7C8729196F72B50091A3DD /* main.swift */; };
-		7C7C872C196F72B50091A3DD /* NzbDroneMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7C872B196F72B50091A3DD /* NzbDroneMac.swift */; };
+		7C16B22A1A542C5A0038B403 /* MonoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C16B2281A542C5A0038B403 /* MonoDialog.swift */; };
+		7C16B22B1A542C5A0038B403 /* MonoDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C16B2291A542C5A0038B403 /* MonoDialog.xib */; };
+		7C4CFB1F1A5CCE9C009A6021 /* DaemonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CFB1E1A5CCE9C009A6021 /* DaemonController.swift */; };
+		7C533F211A5280C100E1473B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C533F201A5280C100E1473B /* AppDelegate.swift */; };
+		7C533F231A5280C100E1473B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C533F221A5280C100E1473B /* Images.xcassets */; };
+		7C533F261A5280C100E1473B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C533F241A5280C100E1473B /* MainMenu.xib */; };
+		7C533F3E1A52811C00E1473B /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C533F3D1A52811C00E1473B /* Tools.swift */; };
+		7C83514B1A5948280040C5BA /* Migrate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C83514A1A5948280040C5BA /* Migrate.swift */; };
+		7C83514D1A5974B00040C5BA /* DownloadSonarr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C83514C1A5974B00040C5BA /* DownloadSonarr.swift */; };
+		7C83514F1A597FEF0040C5BA /* LoginItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C83514E1A597FEF0040C5BA /* LoginItems.swift */; };
+		7CB5E3C21A5993D700F9A2DC /* MoveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB5E3C11A5993D700F9A2DC /* MoveApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7C2532D119713D1500C66EF7 /* NzbDroneMac-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NzbDroneMac-Bridging-Header.h"; sourceTree = "<group>"; };
-		7C2532D41971413F00C66EF7 /* LoginItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginItems.h; sourceTree = "<group>"; };
-		7C2532D51971413F00C66EF7 /* LoginItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginItems.m; sourceTree = "<group>"; };
-		7C4082561970DECD00425210 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
-		7C40825C1970DF4D00425210 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		7C40825F1970E2BD00425210 /* icon_black_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_black_16.png; sourceTree = "<group>"; };
-		7C4082611970E2CB00425210 /* icon_white_16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_white_16.png; sourceTree = "<group>"; };
-		7C7C8724196F72B50091A3DD /* NzbDroneMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NzbDroneMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C7C8728196F72B50091A3DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7C7C8729196F72B50091A3DD /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		7C7C872B196F72B50091A3DD /* NzbDroneMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NzbDroneMac.swift; sourceTree = "<group>"; };
+		7C16B2281A542C5A0038B403 /* MonoDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MonoDialog.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C16B2291A542C5A0038B403 /* MonoDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MonoDialog.xib; sourceTree = "<group>"; };
+		7C4CFB1E1A5CCE9C009A6021 /* DaemonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DaemonController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C533F1B1A5280C100E1473B /* Sonarr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sonarr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C533F1F1A5280C100E1473B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7C533F201A5280C100E1473B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7C533F221A5280C100E1473B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		7C533F251A5280C100E1473B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		7C533F3D1A52811C00E1473B /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Tools.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C83514A1A5948280040C5BA /* Migrate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Migrate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		7C83514C1A5974B00040C5BA /* DownloadSonarr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadSonarr.swift; sourceTree = "<group>"; };
+		7C83514E1A597FEF0040C5BA /* LoginItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginItems.swift; sourceTree = "<group>"; };
+		7CB5E3C11A5993D700F9A2DC /* MoveApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		7C7C8721196F72B50091A3DD /* Frameworks */ = {
+		7C533F181A5280C100E1473B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,43 +47,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7C7C871B196F72B50091A3DD = {
+		7C533F121A5280C100E1473B = {
 			isa = PBXGroup;
 			children = (
-				7C7C8726196F72B50091A3DD /* NzbDroneMac */,
-				7C7C8725196F72B50091A3DD /* Products */,
+				7C533F1D1A5280C100E1473B /* Sonarr */,
+				7C533F1C1A5280C100E1473B /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		7C7C8725196F72B50091A3DD /* Products */ = {
+		7C533F1C1A5280C100E1473B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7C7C8724196F72B50091A3DD /* NzbDroneMac.app */,
+				7C533F1B1A5280C100E1473B /* Sonarr.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7C7C8726196F72B50091A3DD /* NzbDroneMac */ = {
+		7C533F1D1A5280C100E1473B /* Sonarr */ = {
 			isa = PBXGroup;
 			children = (
-				7C40825C1970DF4D00425210 /* Images.xcassets */,
-				7C2532D41971413F00C66EF7 /* LoginItems.h */,
-				7C2532D51971413F00C66EF7 /* LoginItems.m */,
-				7C7C872B196F72B50091A3DD /* NzbDroneMac.swift */,
-				7C4082561970DECD00425210 /* Tools.swift */,
-				7C7C8727196F72B50091A3DD /* Supporting Files */,
+				7C533F3D1A52811C00E1473B /* Tools.swift */,
+				7C533F201A5280C100E1473B /* AppDelegate.swift */,
+				7CB5E3C11A5993D700F9A2DC /* MoveApp.swift */,
+				7C83514E1A597FEF0040C5BA /* LoginItems.swift */,
+				7C83514A1A5948280040C5BA /* Migrate.swift */,
+				7C533F221A5280C100E1473B /* Images.xcassets */,
+				7C533F241A5280C100E1473B /* MainMenu.xib */,
+				7C4CFB1E1A5CCE9C009A6021 /* DaemonController.swift */,
+				7C16B2281A542C5A0038B403 /* MonoDialog.swift */,
+				7C16B2291A542C5A0038B403 /* MonoDialog.xib */,
+				7C83514C1A5974B00040C5BA /* DownloadSonarr.swift */,
+				7C533F1E1A5280C100E1473B /* Supporting Files */,
 			);
-			path = NzbDroneMac;
+			path = Sonarr;
 			sourceTree = "<group>";
 		};
-		7C7C8727196F72B50091A3DD /* Supporting Files */ = {
+		7C533F1E1A5280C100E1473B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7C2532D119713D1500C66EF7 /* NzbDroneMac-Bridging-Header.h */,
-				7C40825F1970E2BD00425210 /* icon_black_16.png */,
-				7C4082611970E2CB00425210 /* icon_white_16.png */,
-				7C7C8728196F72B50091A3DD /* Info.plist */,
-				7C7C8729196F72B50091A3DD /* main.swift */,
+				7C533F1F1A5280C100E1473B /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -85,39 +93,39 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7C7C8723196F72B50091A3DD /* NzbDroneMac */ = {
+		7C533F1A1A5280C100E1473B /* Sonarr */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7C7C8740196F72B50091A3DD /* Build configuration list for PBXNativeTarget "NzbDroneMac" */;
+			buildConfigurationList = 7C533F351A5280C100E1473B /* Build configuration list for PBXNativeTarget "Sonarr" */;
 			buildPhases = (
-				7C7C8720196F72B50091A3DD /* Sources */,
-				7C7C8721196F72B50091A3DD /* Frameworks */,
-				7C7C8722196F72B50091A3DD /* Resources */,
-				7C40825E1970E17000425210 /* ShellScript */,
+				7C533F171A5280C100E1473B /* Sources */,
+				7C533F181A5280C100E1473B /* Frameworks */,
+				7C533F191A5280C100E1473B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = NzbDroneMac;
-			productName = NzbDroneStatus;
-			productReference = 7C7C8724196F72B50091A3DD /* NzbDroneMac.app */;
+			name = Sonarr;
+			productName = Sonarr;
+			productReference = 7C533F1B1A5280C100E1473B /* Sonarr.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		7C7C871C196F72B50091A3DD /* Project object */ = {
+		7C533F131A5280C100E1473B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
-				ORGANIZATIONNAME = "Jeff Barnes";
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = Sonarr;
 				TargetAttributes = {
-					7C7C8723196F72B50091A3DD = {
-						CreatedOnToolsVersion = 6.0;
+					7C533F1A1A5280C100E1473B = {
+						CreatedOnToolsVersion = 6.1.1;
 					};
 				};
 			};
-			buildConfigurationList = 7C7C871F196F72B50091A3DD /* Build configuration list for PBXProject "NzbDroneMac" */;
+			buildConfigurationList = 7C533F161A5280C100E1473B /* Build configuration list for PBXProject "Sonarr" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -125,61 +133,60 @@
 				en,
 				Base,
 			);
-			mainGroup = 7C7C871B196F72B50091A3DD;
-			productRefGroup = 7C7C8725196F72B50091A3DD /* Products */;
+			mainGroup = 7C533F121A5280C100E1473B;
+			productRefGroup = 7C533F1C1A5280C100E1473B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7C7C8723196F72B50091A3DD /* NzbDroneMac */,
+				7C533F1A1A5280C100E1473B /* Sonarr */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		7C7C8722196F72B50091A3DD /* Resources */ = {
+		7C533F191A5280C100E1473B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C4082621970E2CB00425210 /* icon_white_16.png in Resources */,
-				7C40825D1970DF4D00425210 /* Images.xcassets in Resources */,
-				7C4082601970E2BD00425210 /* icon_black_16.png in Resources */,
+				7C533F231A5280C100E1473B /* Images.xcassets in Resources */,
+				7C16B22B1A542C5A0038B403 /* MonoDialog.xib in Resources */,
+				7C533F261A5280C100E1473B /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		7C40825E1970E17000425210 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\nbuildPlist=${INFOPLIST_FILE}\nCFBundleVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" $buildPlist)\nCFBundleVersionINCR=$((CFBundleVersion + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $CFBundleVersionINCR\" $buildPlist\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		7C7C8720196F72B50091A3DD /* Sources */ = {
+		7C533F171A5280C100E1473B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C2532D61971413F00C66EF7 /* LoginItems.m in Sources */,
-				7C4082571970DECD00425210 /* Tools.swift in Sources */,
-				7C7C872C196F72B50091A3DD /* NzbDroneMac.swift in Sources */,
-				7C7C872A196F72B50091A3DD /* main.swift in Sources */,
+				7C83514F1A597FEF0040C5BA /* LoginItems.swift in Sources */,
+				7C4CFB1F1A5CCE9C009A6021 /* DaemonController.swift in Sources */,
+				7C16B22A1A542C5A0038B403 /* MonoDialog.swift in Sources */,
+				7C83514B1A5948280040C5BA /* Migrate.swift in Sources */,
+				7C533F3E1A52811C00E1473B /* Tools.swift in Sources */,
+				7CB5E3C21A5993D700F9A2DC /* MoveApp.swift in Sources */,
+				7C533F211A5280C100E1473B /* AppDelegate.swift in Sources */,
+				7C83514D1A5974B00040C5BA /* DownloadSonarr.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		7C533F241A5280C100E1473B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7C533F251A5280C100E1473B /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
-		7C7C873E196F72B50091A3DD /* Debug */ = {
+		7C533F331A5280C100E1473B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -199,6 +206,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -221,7 +229,7 @@
 			};
 			name = Debug;
 		};
-		7C7C873F196F72B50091A3DD /* Release */ = {
+		7C533F341A5280C100E1473B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -256,55 +264,56 @@
 			};
 			name = Release;
 		};
-		7C7C8741196F72B50091A3DD /* Debug */ = {
+		7C533F361A5280C100E1473B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = NzbDroneMac/Info.plist;
+				INFOPLIST_FILE = Sonarr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_NAME = NzbDroneMac;
-				SWIFT_OBJC_BRIDGING_HEADER = "NzbDroneMac/NzbDroneMac-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = "tv.sonarr.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
-		7C7C8742196F72B50091A3DD /* Release */ = {
+		7C533F371A5280C100E1473B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = NzbDroneMac/Info.plist;
+				INFOPLIST_FILE = Sonarr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_NAME = NzbDroneMac;
-				SWIFT_OBJC_BRIDGING_HEADER = "NzbDroneMac/NzbDroneMac-Bridging-Header.h";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_BUNDLE_IDENTIFIER = "tv.sonarr.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7C7C871F196F72B50091A3DD /* Build configuration list for PBXProject "NzbDroneMac" */ = {
+		7C533F161A5280C100E1473B /* Build configuration list for PBXProject "Sonarr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7C7C873E196F72B50091A3DD /* Debug */,
-				7C7C873F196F72B50091A3DD /* Release */,
+				7C533F331A5280C100E1473B /* Debug */,
+				7C533F341A5280C100E1473B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7C7C8740196F72B50091A3DD /* Build configuration list for PBXNativeTarget "NzbDroneMac" */ = {
+		7C533F351A5280C100E1473B /* Build configuration list for PBXNativeTarget "Sonarr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7C7C8741196F72B50091A3DD /* Debug */,
-				7C7C8742196F72B50091A3DD /* Release */,
+				7C533F361A5280C100E1473B /* Debug */,
+				7C533F371A5280C100E1473B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 7C7C871C196F72B50091A3DD /* Project object */;
+	rootObject = 7C533F131A5280C100E1473B /* Project object */;
 }

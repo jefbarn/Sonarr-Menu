@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+            <connections>
+                <outlet property="delegate" destination="Voe-Tx-rLC" id="GzC-gU-4Uq"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Sonarr" customModuleProvider="target">
+            <connections>
+                <outlet property="loginMenuItem" destination="Sg7-JS-tcs" id="Hy1-Ni-kvR"/>
+                <outlet property="statusMenu" destination="Heh-3M-pe8" id="Szg-vr-W7I"/>
+                <outlet property="statusMenuItem" destination="VRH-AH-Awc" id="iOt-8p-fKr"/>
+            </connections>
+        </customObject>
+        <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <menu title="Sonarr" autoenablesItems="NO" id="Heh-3M-pe8">
+            <items>
+                <menuItem title="Status" enabled="NO" id="VRH-AH-Awc">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="runDaemonAction:" target="Voe-Tx-rLC" id="Dmk-mO-4Lk"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="Vkn-K9-z3d"/>
+                <menuItem title="Web Interface" id="Jem-AV-Jew">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="webInterfaceAction:" target="Voe-Tx-rLC" id="eXq-UC-QcI"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Homepage" id="avM-eW-kS5">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="homepageAction:" target="Voe-Tx-rLC" id="MWW-M9-IRk"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="eQG-I1-mMq"/>
+                <menuItem title="About Sonarr" id="BWd-pk-ohR">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="aboutAction:" target="Voe-Tx-rLC" id="mfG-yL-Htd"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Run At Login" id="Sg7-JS-tcs">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="runAtLoginAction:" target="Voe-Tx-rLC" id="FK0-Wc-QCD"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="sQV-5R-fZ8"/>
+                <menuItem title="Quit Sonarr" id="u5o-7R-2Z8">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="quitAction:" target="Voe-Tx-rLC" id="GPx-tR-nor"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-332.5" y="116.5"/>
+        </menu>
+    </objects>
+</document>
