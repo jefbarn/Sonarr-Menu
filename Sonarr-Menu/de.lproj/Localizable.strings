@@ -1,0 +1,6 @@
+/* Sonarr Menu Status Item Text when running. */
+"SONARR_MENU_ITEM_RUNNING" = "Aktiv";
+
+/* Sonarr Menu Status Item Text when stopped. */
+"SONARR_MENU_ITEM_START" = "Sonarr starten";
+

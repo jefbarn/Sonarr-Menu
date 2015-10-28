@@ -93,10 +93,10 @@ extension AppDelegate: NSMenuDelegate {
     func menuWillOpen(menu: NSMenu) {
         
         if SonarrApp.isRunning() {
-            statusMenuItem.title = "Running"
+            statusMenuItem.title = NSLocalizedString("SONARR_MENU_ITEM_RUNNING", comment: "Sonarr Menu Status Item Text when running.")
             statusMenuItem.enabled = false
         } else {
-            statusMenuItem.title = "Start Sonarr"
+            statusMenuItem.title = NSLocalizedString("SONARR_MENU_ITEM_START", comment: "Sonarr Menu Status Item Text when stopped.")
             statusMenuItem.enabled = true
         }
     }
