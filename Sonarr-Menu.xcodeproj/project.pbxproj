@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		282F23191BE042F6007B7148 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 282F23171BE042F6007B7148 /* InfoPlist.strings */; };
+		28C10EE61BE0461A0072150B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28C10EE41BE0461A0072150B /* Localizable.strings */; };
 		7C728C6F1BDD2BBC0046D6C7 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C728C6E1BDD2BBC0046D6C7 /* Tools.swift */; };
 		7CAA74041BD8D069009C4B37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAA74031BD8D069009C4B37 /* AppDelegate.swift */; };
 		7CAA74061BD8D069009C4B37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CAA74051BD8D069009C4B37 /* Assets.xcassets */; };
@@ -17,12 +19,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		282F23181BE042F6007B7148 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "Sonarr-Menu/de.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		284F77901BE0352400713A01 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		284F77991BE0370200713A01 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		28C10EE51BE0461A0072150B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "Sonarr-Menu/en.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		28E158CA1BE0464100FA4DB1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "Sonarr-Menu/de.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7C728C6E1BDD2BBC0046D6C7 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		7CAA74001BD8D069009C4B37 /* Sonarr-Menu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sonarr-Menu.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7CAA74031BD8D069009C4B37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7CAA74031BD8D069009C4B37 /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 4; };
 		7CAA74051BD8D069009C4B37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7CAA74081BD8D069009C4B37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		7CAA740A1BD8D069009C4B37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CAA74151BD8D981009C4B37 /* LaunchAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchAgent.swift; sourceTree = "<group>"; };
 		7CAA74191BD929A6009C4B37 /* SonarrConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SonarrConfig.swift; sourceTree = "<group>"; };
 		7CAA741D1BD9364F009C4B37 /* SonarrApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SonarrApp.swift; sourceTree = "<group>"; };
@@ -42,6 +48,7 @@
 		7CAA73F71BD8D069009C4B37 = {
 			isa = PBXGroup;
 			children = (
+				282F23171BE042F6007B7148 /* InfoPlist.strings */,
 				7CAA74021BD8D069009C4B37 /* Sonarr-Menu */,
 				7CAA74011BD8D069009C4B37 /* Products */,
 			);
@@ -58,6 +65,7 @@
 		7CAA74021BD8D069009C4B37 /* Sonarr-Menu */ = {
 			isa = PBXGroup;
 			children = (
+				28C10EE41BE0461A0072150B /* Localizable.strings */,
 				7CAA74031BD8D069009C4B37 /* AppDelegate.swift */,
 				7CAA74151BD8D981009C4B37 /* LaunchAgent.swift */,
 				7CAA741D1BD9364F009C4B37 /* SonarrApp.swift */,
@@ -65,7 +73,6 @@
 				7C728C6E1BDD2BBC0046D6C7 /* Tools.swift */,
 				7CAA74051BD8D069009C4B37 /* Assets.xcassets */,
 				7CAA74071BD8D069009C4B37 /* MainMenu.xib */,
-				7CAA740A1BD8D069009C4B37 /* Info.plist */,
 			);
 			path = "Sonarr-Menu";
 			sourceTree = "<group>";
@@ -110,8 +117,9 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
+				de,
 			);
 			mainGroup = 7CAA73F71BD8D069009C4B37;
 			productRefGroup = 7CAA74011BD8D069009C4B37 /* Products */;
@@ -128,6 +136,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28C10EE61BE0461A0072150B /* Localizable.strings in Resources */,
+				282F23191BE042F6007B7148 /* InfoPlist.strings in Resources */,
 				7CAA74061BD8D069009C4B37 /* Assets.xcassets in Resources */,
 				7CAA74091BD8D069009C4B37 /* MainMenu.xib in Resources */,
 			);
@@ -151,10 +161,30 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		282F23171BE042F6007B7148 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				282F23181BE042F6007B7148 /* de */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		28C10EE41BE0461A0072150B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				28C10EE51BE0461A0072150B /* en */,
+				28E158CA1BE0464100FA4DB1 /* de */,
+			);
+			name = Localizable.strings;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		7CAA74071BD8D069009C4B37 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				7CAA74081BD8D069009C4B37 /* Base */,
+				284F77901BE0352400713A01 /* en */,
+				284F77991BE0370200713A01 /* de */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";

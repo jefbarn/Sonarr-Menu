@@ -1,0 +1,24 @@
+/* Class = "NSMenuItem"; title = "Status"; ObjectID = "4lt-a0-xFb"; */
+"4lt-a0-xFb.title" = "Status";
+
+/* Class = "NSMenu"; title = "Sonarr-Menu"; ObjectID = "6pY-oi-g4K"; */
+"6pY-oi-g4K.title" = "Sonarr-Menu";
+
+/* Class = "NSMenuItem"; title = "About Sonarr-Menu"; ObjectID = "DW4-6o-dMM"; */
+"DW4-6o-dMM.title" = "Über Sonarr-Menu";
+
+/* Class = "NSMenuItem"; title = "Quit Sonarr-Menu"; ObjectID = "L80-cs-j5a"; */
+"L80-cs-j5a.title" = "Sonarr-Menu beenden";
+
+/* Class = "NSMenuItem"; title = "Console"; ObjectID = "YGH-Ho-Nob"; */
+"YGH-Ho-Nob.title" = "Konsole";
+
+/* Class = "NSMenuItem"; title = "Web Interface"; ObjectID = "dKT-0S-Roi"; */
+"dKT-0S-Roi.title" = "Web-Interface";
+
+/* Class = "NSMenuItem"; title = "Sonarr Homepage"; ObjectID = "jBK-HX-Sea"; */
+"jBK-HX-Sea.title" = "Sonarr-Homepage";
+
+/* Class = "NSMenuItem"; title = "Run At Login"; ObjectID = "rdo-2P-n8Z"; */
+"rdo-2P-n8Z.title" = "Bei der Anmeldung öffnen";
+

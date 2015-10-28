@@ -20,7 +20,7 @@
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <menu title="Sonarr" autoenablesItems="NO" id="6pY-oi-g4K" userLabel="Status Menu">
+        <menu title="Sonarr-Menu" autoenablesItems="NO" id="6pY-oi-g4K" userLabel="Status Menu">
             <items>
                 <menuItem title="Status" enabled="NO" id="4lt-a0-xFb" userLabel="Status Menu Item">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -41,14 +41,14 @@
                         <action selector="consoleAction:" target="Voe-Tx-rLC" id="2dg-og-sU6"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Homepage" id="jBK-HX-Sea">
+                <menuItem title="Sonarr Homepage" id="jBK-HX-Sea">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="homepageAction:" target="Voe-Tx-rLC" id="X9b-6B-MxM"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="Jq8-qH-XLq"/>
-                <menuItem title="About Sonarr" id="DW4-6o-dMM">
+                <menuItem title="About Sonarr-Menu" id="DW4-6o-dMM">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="aboutAction:" target="Voe-Tx-rLC" id="sZ4-Uu-FZb"/>
@@ -61,14 +61,14 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="psz-Ao-B01"/>
-                <menuItem title="Quit Sonarr" id="L80-cs-j5a">
+                <menuItem title="Quit Sonarr-Menu" id="L80-cs-j5a">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="quitAction:" target="Voe-Tx-rLC" id="JgR-HB-axR"/>
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-439.5" y="-64.5"/>
+            <point key="canvasLocation" x="0.0" y="0.0"/>
         </menu>
     </objects>
 </document>
