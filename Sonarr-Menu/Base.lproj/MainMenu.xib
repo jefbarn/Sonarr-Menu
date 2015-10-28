@@ -28,7 +28,6 @@
                         <action selector="startAction:" target="Voe-Tx-rLC" id="opc-0R-go0"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="MOe-ER-OLc"/>
                 <menuItem title="Web Interface" id="dKT-0S-Roi">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -41,12 +40,6 @@
                         <action selector="consoleAction:" target="Voe-Tx-rLC" id="2dg-og-sU6"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Sonarr Homepage" id="jBK-HX-Sea">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="homepageAction:" target="Voe-Tx-rLC" id="X9b-6B-MxM"/>
-                    </connections>
-                </menuItem>
                 <menuItem isSeparatorItem="YES" id="Jq8-qH-XLq"/>
                 <menuItem title="About Sonarr-Menu" id="DW4-6o-dMM">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -54,13 +47,19 @@
                         <action selector="aboutAction:" target="Voe-Tx-rLC" id="sZ4-Uu-FZb"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Sonarr Homepage" id="jBK-HX-Sea">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="homepageAction:" target="Voe-Tx-rLC" id="X9b-6B-MxM"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="psz-Ao-B01"/>
                 <menuItem title="Run At Login" id="rdo-2P-n8Z">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="runAtLoginAction:" target="Voe-Tx-rLC" id="vWJ-HT-Ehd"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="psz-Ao-B01"/>
                 <menuItem title="Quit Sonarr-Menu" id="L80-cs-j5a">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
