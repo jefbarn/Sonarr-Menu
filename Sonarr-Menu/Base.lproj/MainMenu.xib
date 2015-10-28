@@ -60,14 +60,14 @@
                         <action selector="runAtLoginAction:" target="Voe-Tx-rLC" id="vWJ-HT-Ehd"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Quit Sonarr-Menu" id="L80-cs-j5a">
+                <menuItem title="Quit Sonarr" id="L80-cs-j5a">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="quitAction:" target="Voe-Tx-rLC" id="JgR-HB-axR"/>
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="0.0" y="0.0"/>
+            <point key="canvasLocation" x="-560" y="-104.5"/>
         </menu>
     </objects>
 </document>

@@ -1,14 +1,15 @@
+
 /* Class = "NSMenuItem"; title = "Status"; ObjectID = "4lt-a0-xFb"; */
 "4lt-a0-xFb.title" = "Status";
 
 /* Class = "NSMenu"; title = "Sonarr-Menu"; ObjectID = "6pY-oi-g4K"; */
-"6pY-oi-g4K.title" = "Sonarr";
+"6pY-oi-g4K.title" = "Sonarr-Menu";
 
 /* Class = "NSMenuItem"; title = "About Sonarr-Menu"; ObjectID = "DW4-6o-dMM"; */
 "DW4-6o-dMM.title" = "About Sonarr-Menu";
 
-/* Class = "NSMenuItem"; title = "Quit Sonarr-Menu"; ObjectID = "L80-cs-j5a"; */
-"L80-cs-j5a.title" = "Quit Sonarr-Menu";
+/* Class = "NSMenuItem"; title = "Quit Sonarr"; ObjectID = "L80-cs-j5a"; */
+"L80-cs-j5a.title" = "Quit Sonarr";
 
 /* Class = "NSMenuItem"; title = "Console"; ObjectID = "YGH-Ho-Nob"; */
 "YGH-Ho-Nob.title" = "Console";

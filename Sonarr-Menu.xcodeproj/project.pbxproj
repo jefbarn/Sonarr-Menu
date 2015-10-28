@@ -20,10 +20,12 @@
 
 /* Begin PBXFileReference section */
 		282F23181BE042F6007B7148 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "Sonarr-Menu/de.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		284F77901BE0352400713A01 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		284F77991BE0370200713A01 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		28C10EE51BE0461A0072150B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "Sonarr-Menu/en.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		28E158CA1BE0464100FA4DB1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "Sonarr-Menu/de.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7C1468B01BE08AEE004A8FD0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Sonarr-Menu/Info.plist"; sourceTree = "<group>"; };
+		7C1468B51BE091D5004A8FD0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "Sonarr-Menu/en.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		7C1468B91BE09250004A8FD0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		7C728C6E1BDD2BBC0046D6C7 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
 		7CAA74001BD8D069009C4B37 /* Sonarr-Menu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sonarr-Menu.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CAA74031BD8D069009C4B37 /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; tabWidth = 4; };
@@ -48,6 +50,7 @@
 		7CAA73F71BD8D069009C4B37 = {
 			isa = PBXGroup;
 			children = (
+				7C1468B01BE08AEE004A8FD0 /* Info.plist */,
 				282F23171BE042F6007B7148 /* InfoPlist.strings */,
 				7CAA74021BD8D069009C4B37 /* Sonarr-Menu */,
 				7CAA74011BD8D069009C4B37 /* Products */,
@@ -65,7 +68,6 @@
 		7CAA74021BD8D069009C4B37 /* Sonarr-Menu */ = {
 			isa = PBXGroup;
 			children = (
-				28C10EE41BE0461A0072150B /* Localizable.strings */,
 				7CAA74031BD8D069009C4B37 /* AppDelegate.swift */,
 				7CAA74151BD8D981009C4B37 /* LaunchAgent.swift */,
 				7CAA741D1BD9364F009C4B37 /* SonarrApp.swift */,
@@ -73,6 +75,7 @@
 				7C728C6E1BDD2BBC0046D6C7 /* Tools.swift */,
 				7CAA74051BD8D069009C4B37 /* Assets.xcassets */,
 				7CAA74071BD8D069009C4B37 /* MainMenu.xib */,
+				28C10EE41BE0461A0072150B /* Localizable.strings */,
 			);
 			path = "Sonarr-Menu";
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				282F23181BE042F6007B7148 /* de */,
+				7C1468B51BE091D5004A8FD0 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -183,8 +187,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				7CAA74081BD8D069009C4B37 /* Base */,
-				284F77901BE0352400713A01 /* en */,
 				284F77991BE0370200713A01 /* de */,
+				7C1468B91BE09250004A8FD0 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";

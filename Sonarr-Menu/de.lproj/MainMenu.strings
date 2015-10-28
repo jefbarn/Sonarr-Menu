@@ -8,7 +8,7 @@
 "DW4-6o-dMM.title" = "Über Sonarr-Menu";
 
 /* Class = "NSMenuItem"; title = "Quit Sonarr-Menu"; ObjectID = "L80-cs-j5a"; */
-"L80-cs-j5a.title" = "Sonarr-Menu beenden";
+"L80-cs-j5a.title" = "Sonarr beenden";
 
 /* Class = "NSMenuItem"; title = "Console"; ObjectID = "YGH-Ho-Nob"; */
 "YGH-Ho-Nob.title" = "Konsole";
