@@ -1,6 +1,11 @@
 # Sonarr-Menu
 #####OSX Status Menu for Sonarr 
 
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+####I've stopped using MacOS for Sonarr, so will no longer be maintaining this project. Forking is welcome!
+
+
+
 This is a small utility that adds a menu to the Status Bar for managing [Sonarr](https://sonarr.tv).
 
 Features include:
