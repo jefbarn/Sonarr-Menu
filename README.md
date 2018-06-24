@@ -1,8 +1,9 @@
 # Sonarr-Menu
-#####OSX Status Menu for Sonarr 
+OSX Status Menu for Sonarr 
 
 [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
-####I've stopped using MacOS for Sonarr, so will no longer be maintaining this project. Forking is welcome!
+
+I've stopped using MacOS for Sonarr, so will no longer be maintaining this project. Forking is welcome!
 
 
 
